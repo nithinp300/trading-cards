@@ -1,0 +1,22 @@
+{
+  "name": "trading-cards-data-service",
+  "version": "1.0.0",
+  "description": "A RESTful API linked to a extensive MongoDB Atlas cloud database detailing all Yu-Gi-Oh! trading cards.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nithinp300/trading-cards.git"
+  },
+  "author": "Nithin Pingili",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nithinp300/trading-cards/issues"
+  },
+  "homepage": "https://github.com/nithinp300/trading-cards#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
