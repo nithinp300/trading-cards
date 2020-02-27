@@ -1,5 +1,5 @@
 # Trading Cards
-A collection of loosely coupled services for Yu-Gi-Oh! Trading Cards
+A collection of loosely coupled services(Microservices) for Yu-Gi-Oh! Trading Cards
 
 This Application consists of:
 
