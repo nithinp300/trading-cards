@@ -2,8 +2,10 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const request = require('request');
 
+
+const password = fs.readFileSync('../db_creds.txt','utf8');
 // Connection URL
-const url = 'mongodb+srv://nithin:<password>@cluster0-p7o7f.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb+srv://nithin:'+password+'@cluster0-p7o7f.mongodb.net/test?retryWrites=true&w=majority';
 
 // Database Name
 const dbName = 'trading-cards';
