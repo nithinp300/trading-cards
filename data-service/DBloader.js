@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const request = require('request');
-
+const fs = require('fs');
 
 const password = fs.readFileSync('../db_creds.txt','utf8');
 // Connection URL
@@ -19,23 +19,28 @@ client.connect(function(err) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
-
-  request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
-      if (err) { return console.log(err); }
-      insertSpells(db, body, function() {
-        client.close();
+  const spells = db.collection('spells');
+  spells.estimatedDocumentCount(function(err, count){
+    if(count == 0){
+      request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
+        if (err) { return console.log(err); }
+        insertCards(db, 'spells', body, function() {
+          client.close();
+        });
       });
+    }
   });
+  client.close();
 });
 
 // request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
 //     if (err) { return console.log(err); }
 // });
 
-const insertSpells = function(db, body, callback) {
+const insertCards = function(db, collectionName, body, callback) {
     numCards = body.length;
     // Get the documents collection
-    const collection = db.collection('spells');
+    const collection = db.collection(collectionName);
     // Insert some documents
     collection.insertMany(body, function(err, result) {
       assert.equal(err, null);
