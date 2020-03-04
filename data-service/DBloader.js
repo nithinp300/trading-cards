@@ -19,28 +19,43 @@ client.connect(function(err) {
   console.log("Connected successfully to server");
 
   const db = client.db(dbName);
-  const spells = db.collection('spells');
-  spells.estimatedDocumentCount(function(err, count){
+  const trapsCollection = db.collection('traps');
+  trapsCollection.estimatedDocumentCount(function(err, count) {
     if(count == 0){
-      request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
-        if (err) { return console.log(err); }
-        insertCards(db, 'spells', body, function() {
-          client.close();
+        request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Trap Card', { json: true }, (err, res, body) => {
+            if (err) { return console.log(err); }
+            insertCards(trapsCollection, body, function() {
+                client.close();
+            });
         });
-      });
+    }
+    else{
+      console.log(count);
+      client.close();
     }
   });
-  client.close();
+
+  const spellsCollection = db.collection('spells');
+  spellsCollection.estimatedDocumentCount(function(err, count) {
+    if(count == 0){
+        request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
+            if (err) { return console.log(err); }
+            insertCards(spellsCollection, body, function() {
+                client.close();
+            });
+        });
+    }
+    else{
+      console.log(count);
+      client.close();
+    }
+  });
 });
 
-// request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
-//     if (err) { return console.log(err); }
-// });
-
-const insertCards = function(db, collectionName, body, callback) {
+const insertCards = function(collection, body, callback) {
     numCards = body.length;
-    // Get the documents collection
-    const collection = db.collection(collectionName);
+    // Get the collection
+    //const collection = db.collection('traps');
     // Insert some documents
     collection.insertMany(body, function(err, result) {
       assert.equal(err, null);
