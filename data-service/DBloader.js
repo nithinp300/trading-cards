@@ -22,12 +22,12 @@ client.connect(function(err) {
   const trapsCollection = db.collection('traps');
   trapsCollection.estimatedDocumentCount(function(err, count) {
     if(count == 0){
-        request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Trap Card', { json: true }, (err, res, body) => {
-            if (err) { return console.log(err); }
-            insertCards(trapsCollection, body, function() {
-                client.close();
-            });
-        });
+      request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Trap Card', { json: true }, (err, res, body) => {
+          if (err) { return console.log(err); }
+          insertCards(trapsCollection, body, function() {
+              client.close();
+          });
+      });
     }
     else{
       console.log(count);
@@ -38,12 +38,12 @@ client.connect(function(err) {
   const spellsCollection = db.collection('spells');
   spellsCollection.estimatedDocumentCount(function(err, count) {
     if(count == 0){
-        request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
-            if (err) { return console.log(err); }
-            insertCards(spellsCollection, body, function() {
-                client.close();
-            });
-        });
+      request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
+          if (err) { return console.log(err); }
+          insertCards(spellsCollection, body, function() {
+              client.close();
+          });
+      });
     }
     else{
       console.log(count);
