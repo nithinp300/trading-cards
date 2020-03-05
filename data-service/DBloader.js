@@ -50,6 +50,32 @@ client.connect(function(err) {
       client.close();
     }
   });
+
+  const monstersCollection = db.collection('monsters');
+  monstersCollection.estimatedDocumentCount(function(err, count) {
+    if(count == 0){
+      let monsterTypes = ['Normal Monster', 'Normal Tuner Monster', 
+      'Effect Monster', 'Tuner Monster', 'Flip Monster', 'Flip Effect Monster', 
+      'Flip Tuner Effect Monster', 'Spirit Monster', 'Union Effect Monster', 
+      'Gemini Monster', 'Pendulum Effect Monster', 'Pendulum Normal Monster', 
+      'Pendulum Tuner Effect Monster', 'Ritual Monster', 'Ritual Effect Monster', 
+      'Toon Monster', 'Fusion Monster', 'Synchro Monster', 'Synchro Tuner Monster', 
+      'Synchro Pendulum Effect Monster', 'XYZ Monster', 'XYZ Pendulum Effect Monster', 
+      'Link Monster', 'Pendulum Flip Effect Monster', 'Pendulum Effect Fusion Monster'];
+      
+      request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type=Spell Card', { json: true }, (err, res, body) => {
+          if (err) { return console.log(err); }
+          insertCards(monstersCollection, body, function() {
+              client.close();
+          });
+      });
+    }
+    else{
+      console.log(count);
+      client.close();
+    }
+  });
+
 });
 
 const insertCards = function(collection, body, callback) {
