@@ -51,6 +51,14 @@ client.connect(function(err) {
     }
   });
 
+  function loadMonsters(monsterType, collection){
+    request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type='+monsterType, { json: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
+      insertCards(collection, body, function() {
+
+      });
+    });
+  }
   const monstersCollection = db.collection('monsters');
   monstersCollection.estimatedDocumentCount(function(err, count) {
     if(count == 0){
@@ -63,12 +71,13 @@ client.connect(function(err) {
       'Synchro Pendulum Effect Monster', 'XYZ Monster', 'XYZ Pendulum Effect Monster', 
       'Link Monster', 'Pendulum Flip Effect Monster', 'Pendulum Effect Fusion Monster'];
       for(let i = 0; i < monsterTypes.length; i++){
-        request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type='+monsterTypes[i], { json: true }, (err, res, body) => {
-          if (err) { return console.log(err); }
-          insertCards(monstersCollection, body, function() {
-            await new Promise(r => setTimeout(r, 2000));
-          });
-        });
+        setTimeout(loadMonsters, 2000, monsterTypes[i], monstersCollection)
+        // request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type='+monsterTypes[i], { json: true }, (err, res, body) => {
+        //   if (err) { return console.log(err); }
+        //   insertCards(monstersCollection, body, function() {
+        //     await new Promise(r => setTimeout(r, 2000));
+        //   });
+        // });
       }
     }
     else{
