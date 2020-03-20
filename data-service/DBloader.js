@@ -60,9 +60,7 @@ client.connect(function(err) {
     });
   }
   const monstersCollection = db.collection('monsters');
-  monstersCollection.estimatedDocumentCount(function(err, count) {
-    if(count == 0){
-      let monsterTypes = ['Normal Monster', 'Normal Tuner Monster', 
+  let monsterTypes = ['Normal Monster', 'Normal Tuner Monster', 
       'Effect Monster', 'Tuner Monster', 'Flip Monster', 'Flip Effect Monster', 
       'Flip Tuner Effect Monster', 'Spirit Monster', 'Union Effect Monster', 
       'Gemini Monster', 'Pendulum Effect Monster', 'Pendulum Normal Monster', 
@@ -70,21 +68,44 @@ client.connect(function(err) {
       'Toon Monster', 'Fusion Monster', 'Synchro Monster', 'Synchro Tuner Monster', 
       'Synchro Pendulum Effect Monster', 'XYZ Monster', 'XYZ Pendulum Effect Monster', 
       'Link Monster', 'Pendulum Flip Effect Monster', 'Pendulum Effect Fusion Monster'];
-      for(let i = 0; i < monsterTypes.length; i++){
-        setTimeout(loadMonsters, 2000, monsterTypes[i], monstersCollection)
-        // request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type='+monsterTypes[i], { json: true }, (err, res, body) => {
-        //   if (err) { return console.log(err); }
-        //   insertCards(monstersCollection, body, function() {
-        //     await new Promise(r => setTimeout(r, 2000));
-        //   });
-        // });
+  // monstersCollection.estimatedDocumentCount(function(err, count) {
+  //   if(count == 0){
+  //     for(let i = 0; i < monsterTypes.length; i++){
+  //       setTimeout(loadMonsters, 2000, monsterTypes[i], monstersCollection)
+  //       request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type='+monsterTypes[i], { json: true }, (err, res, body) => {
+  //         if (err) { return console.log(err); }
+  //         insertCards(monstersCollection, body, function() {
+  //           await new Promise(r => setTimeout(r, 2000));
+  //         });
+  //       });
+  //     }
+  //   }
+  //   else{
+  //     console.log(count);
+  //     client.close();
+  //   }
+  // });
+
+  sequentialRequests(monsterTypes);
+  function sequentialRequests(arr, i){
+    if (i == undefined) {i = 0}
+    if (i++ >= arr.length) {return}
+    monstersCollection.estimatedDocumentCount(function(err, count) {
+      if(count == 0){
+        request('https://db.ygoprodeck.com/api/v6/cardinfo.php?type='+arr[i], { json: true }, (err, res, body) => {
+          if (err) { return console.log(err); }
+          insertCards(monstersCollection, body, function() {
+            setTimeout(sequentialRequests(arr, i), 2000);
+          });
+        });
       }
-    }
-    else{
-      console.log(count);
-      client.close();
-    }
-  });
+      else{
+        console.log(count);
+        client.close();
+        return;
+      }
+    });
+  }
 
 });
 
