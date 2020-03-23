@@ -15,11 +15,21 @@ const collectionName = 'monsters';
 db.initialize(dbName, collectionName, function(dbCollection) { // success callback
     // db CRUD routes
 
-    app.get("/monsters", (request, response) => {
-        // return all monsters
-        dbCollection.find().toArray((error, result) => {
+    app.get("/monsters", (req, res) => {
+        // return all monsters filtered by query parameters
+        console.log(req.query);
+        if(typeof req.query.level !== "undefined"){
+            req.query.level = int32(req.query.level);
+        }
+        if(typeof req.query.atk !== "undefined"){
+            req.query.atk = int32(req.query.atk);
+        }
+        if(typeof req.query.def !== "undefined"){
+            req.query.def = int32(req.query.def);
+        }
+        dbCollection.find(req.query).toArray((error, result) => {
             if (error) throw error;
-            response.json(result);
+            res.json(result);
         });
     });
 
