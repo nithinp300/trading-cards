@@ -3,9 +3,9 @@ const assert = require('assert');
 const request = require('request');
 const fs = require('fs');
 
-const password = fs.readFileSync('../db_creds.txt','utf8');
+const credentials = fs.readFileSync('../db_creds.txt','utf8');
 // Connection URL
-const url = 'mongodb+srv://nithin:'+password+'@cluster0-p7o7f.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb+srv://'+credentials+'@cluster0-p7o7f.mongodb.net/test?retryWrites=true&w=majority';
 
 // Database Name
 const dbName = 'trading-cards';
