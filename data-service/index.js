@@ -12,13 +12,16 @@ const collectionName = 'monsters';
 
 // db init
 db.initialize(dbName, collectionName, function(dbCollection) { // success callback
-    // get all items
-    dbCollection.find().toArray(function(err, result) {
-        if (err) throw err;
-          console.log(result);
+    // db CRUD routes
+
+    app.get("/monsters", (request, response) => {
+        // return all monsters
+        dbCollection.find().toArray((error, result) => {
+            if (error) throw error;
+            response.json(result);
+        });
     });
 
-    // db CRUD routes
 
 }, function(err) { // failure callback
     throw (err);
