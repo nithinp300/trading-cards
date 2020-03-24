@@ -28,7 +28,7 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
             req.query.def = int32(req.query.def);
         }
         if(typeof req.query.q !== "undefined"){
-            dbCollection.find({ '$text': {'$search' : req.query.q } }).toArray((error, result) => {
+            dbCollection.find({ $text: {$search : req.query.q } }).project({score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}}).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
