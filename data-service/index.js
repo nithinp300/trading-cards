@@ -143,10 +143,20 @@ db.initialize(dbName, function(dbObject) { // success callback
 
     app.get("/monsters/:id", (req, res) => {
         let monsterId = req.params.id;
-        console.log(monsterId)
+        console.log(monsterId);
         monstersCollection.findOne({ id: new int32(monsterId) }, (error, result) => {
             if (error) throw error;
             // return monster
+            res.json(result);
+        });
+    });
+
+    app.get("/spells/:id", (req, res) => {
+        let spellId = req.params.id;
+        console.log(spellId);
+        spellsCollection.findOne({ id: new int32(spellId) }, (error, result) => {
+            if (error) throw error;
+            // return spell
             res.json(result);
         });
     });
