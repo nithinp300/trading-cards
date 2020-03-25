@@ -7,12 +7,16 @@ app.get('/', (req, res) => {
 });
 
 // db setup
-const db = require("./db");
+const db = require('./db');
 const dbName = 'trading-cards';
-const collectionName = 'monsters';
+//const collectionName = 'monsters';
 
 // db init
-db.initialize(dbName, collectionName, function(dbCollection) { // success callback
+db.initialize(dbName, function(dbObject) { // success callback
+
+    // get collections
+    const monstersCollection = dbObject.collection('monsters');
+    
     // db CRUD routes
 
     app.get("/monsters", (req, res) => {
@@ -29,7 +33,7 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
         }
         if(typeof req.query.q !== "undefined"){
             //Search
-            dbCollection
+            monstersCollection
             .find({ $text: {$search : req.query.q } })
             .project({score: {$meta: "textScore"}})
             .sort({score: {$meta: "textScore"}}).toArray((error, result) => {
@@ -48,14 +52,14 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
                 sortByStr = req.query.sort.substring(1);
             }
             sortBy[sortByStr] = ascDescNum;
-            dbCollection.find().sort(sortBy).toArray((error, result) => {
+            monstersCollection.find().sort(sortBy).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
         }
         else{
             // Filter
-            dbCollection.find(req.query).toArray((error, result) => {
+            monstersCollection.find(req.query).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
@@ -65,7 +69,7 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
     app.get("/monsters/:id", (req, res) => {
         let monsterId = req.params.id;
         console.log(monsterId)
-        dbCollection.findOne({ id: new int32(monsterId) }, (error, result) => {
+        monstersCollection.findOne({ id: new int32(monsterId) }, (error, result) => {
             if (error) throw error;
             // return monster
             res.json(result);

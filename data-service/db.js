@@ -6,7 +6,6 @@ const dbConnectionUrl = 'mongodb+srv://'+credentials+'@cluster0-p7o7f.mongodb.ne
 
 function initialize(
     dbName,
-    dbCollectionName,
     successCallback,
     failureCallback
 ) {
@@ -16,10 +15,9 @@ function initialize(
             failureCallback(err); // this should be "caught" by the calling function
         } else {
             const dbObject = dbInstance.db(dbName);
-            const dbCollection = dbObject.collection(dbCollectionName);
             console.log('[MongoDB connection] SUCCESS');
 
-            successCallback(dbCollection);
+            successCallback(dbObject);
         }
     });
 }
