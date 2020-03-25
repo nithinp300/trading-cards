@@ -22,6 +22,14 @@ db.initialize(dbName, function(dbObject) { // success callback
     app.get("/monsters", (req, res) => {
         // return all monsters that satisfy query parameters
         console.log(req.query);
+        let page = 1;
+        let limit = 5;
+        if(typeof req.query.page !== "undefined"){
+            page = parseInt(req.query.page);
+        }
+        if(typeof req.query.limit !== "undefined"){
+            limit = parseInt(req.query.limit);
+        }
         if(typeof req.query.level !== "undefined"){
             req.query.level = int32(req.query.level);
         }
@@ -31,12 +39,14 @@ db.initialize(dbName, function(dbObject) { // success callback
         if(typeof req.query.def !== "undefined"){
             req.query.def = int32(req.query.def);
         }
+        let skips = limit * (page - 1);
         if(typeof req.query.q !== "undefined"){
             //Search
             monstersCollection
             .find({ $text: {$search : req.query.q } })
             .project({score: {$meta: "textScore"}})
-            .sort({score: {$meta: "textScore"}}).toArray((error, result) => {
+            .sort({score: {$meta: "textScore"}})
+            .skip(skips).limit(limit).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
@@ -52,14 +62,22 @@ db.initialize(dbName, function(dbObject) { // success callback
                 sortByStr = req.query.sort.substring(1);
             }
             sortBy[sortByStr] = ascDescNum;
-            monstersCollection.find().sort(sortBy).toArray((error, result) => {
+            monstersCollection.find().sort(sortBy)
+            .skip(skips).limit(limit).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
         }
         else{
             // Filter
-            monstersCollection.find(req.query).toArray((error, result) => {
+            let filters = new Object();
+            for(let i in req.query){
+                if(i !== "page" && i !== "limit"){
+                    filters[i] = req.query[i];
+                }
+            }
+            monstersCollection.find(filters)
+            .skip(skips).limit(limit).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
