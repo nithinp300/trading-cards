@@ -217,6 +217,16 @@ db.initialize(dbName, function(dbObject) { // success callback
             res.json(result);
         });
     });
+
+    app.get("/traps/:id", (req, res) => {
+        let trapId = req.params.id;
+        console.log(trapId);
+        trapsCollection.findOne({ id: new int32(trapId) }, (error, result) => {
+            if (error) throw error;
+            // return spell
+            res.json(result);
+        });
+    });
 }, function(err) { // failure callback
     throw (err);
 });
