@@ -16,7 +16,7 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
     // db CRUD routes
 
     app.get("/monsters", (req, res) => {
-        // return all monsters filtered by query parameters
+        // return all monsters that satisfy query parameters
         console.log(req.query);
         if(typeof req.query.level !== "undefined"){
             req.query.level = int32(req.query.level);
@@ -29,7 +29,10 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
         }
         if(typeof req.query.q !== "undefined"){
             //Search
-            dbCollection.find({ $text: {$search : req.query.q } }).project({score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}}).toArray((error, result) => {
+            dbCollection
+            .find({ $text: {$search : req.query.q } })
+            .project({score: {$meta: "textScore"}})
+            .sort({score: {$meta: "textScore"}}).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
@@ -59,13 +62,13 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
         }
     });
 
-    app.get("/monsters/:id", (request, response) => {
-        let monsterId = request.params.id;
+    app.get("/monsters/:id", (req, res) => {
+        let monsterId = req.params.id;
         console.log(monsterId)
         dbCollection.findOne({ id: new int32(monsterId) }, (error, result) => {
             if (error) throw error;
             // return monster
-            response.json(result);
+            res.json(result);
         });
     });
 }, function(err) { // failure callback
