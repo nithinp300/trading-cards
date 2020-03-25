@@ -28,12 +28,30 @@ db.initialize(dbName, collectionName, function(dbCollection) { // success callba
             req.query.def = int32(req.query.def);
         }
         if(typeof req.query.q !== "undefined"){
+            //Search
             dbCollection.find({ $text: {$search : req.query.q } }).project({score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}}).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
         }
+        else if(typeof req.query.sort !== "undefined"){
+            // Sort
+            let sortBy = new Object();
+            let sortByStr = req.query.sort;
+            let ascDescNum = 1;
+            let firstChar = req.query.sort.substring(0, 1);
+            if(firstChar === "-"){
+                ascDescNum = -1;
+                sortByStr = req.query.sort.substring(1);
+            }
+            sortBy[sortByStr] = ascDescNum;
+            dbCollection.find().sort(sortBy).toArray((error, result) => {
+                if (error) throw error;
+                res.json(result);
+            });
+        }
         else{
+            // Filter
             dbCollection.find(req.query).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
