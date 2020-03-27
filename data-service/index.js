@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
-const int32 = require("mongodb").Int32;
+const int32 = require('mongodb').Int32;
+const monster = require('./monster');
 
 app.get('/', (req, res) => {
     res.send('This is the Yu-Gi-Oh! Trading Cards RESTful API');
@@ -9,7 +10,9 @@ app.get('/', (req, res) => {
 // db setup
 const db = require('./db');
 const dbName = 'trading-cards';
-//const collectionName = 'monsters';
+const collectionName = 'monsters';
+
+app.get("/monsters", monster.list);
 
 // db init
 db.initialize(dbName, function(dbObject) { // success callback
@@ -20,8 +23,9 @@ db.initialize(dbName, function(dbObject) { // success callback
     const trapsCollection = dbObject.collection('traps');
     
     // db GET routes
+    //app.get("/monsters", monster.list);
 
-    app.get("/monsters", (req, res) => {
+/*     app.get("/monsters", (req, res) => {
         // return all monsters that satisfy query parameters
         console.log(req.query);
         let page = 1;
@@ -84,7 +88,7 @@ db.initialize(dbName, function(dbObject) { // success callback
                 res.json(result);
             });
         }
-    });
+    }); */
 
     app.get("/spells", (req, res) => {
         // return all spells that satisfy query parameters
@@ -223,7 +227,7 @@ db.initialize(dbName, function(dbObject) { // success callback
         console.log(trapId);
         trapsCollection.findOne({ id: new int32(trapId) }, (error, result) => {
             if (error) throw error;
-            // return spell
+            // return trap
             res.json(result);
         });
     });
