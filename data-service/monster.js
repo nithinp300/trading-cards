@@ -72,3 +72,17 @@ exports.list = function(req, res){
         throw (err);
     });
 }
+
+exports.view = function(res, res){
+    db.initialize(dbName, collectionName, function(monstersCollection) { // success callback\
+        let monsterId = req.params.id;
+        console.log(monsterId);
+        monstersCollection.findOne({ id: new int32(monsterId) }, (error, result) => {
+            if (error) throw error;
+            // return monster
+            res.json(result);
+        });
+    }, function(err) { // failureCallback
+        throw (err);
+    });
+}
