@@ -2,10 +2,10 @@ const express = require('express')
 const app = express();
 const int32 = require('mongodb').Int32;
 const monster = require('./monster');
+const routes = require('./routes');
 
-app.get('/', (req, res) => {
-    res.send('This is the Yu-Gi-Oh! Trading Cards RESTful API');
-});
+//  Connect all our routes to our application
+app.use('/', routes);
 
 // db setup
 const db = require('./db');
