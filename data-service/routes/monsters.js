@@ -7,7 +7,6 @@ const dbName = 'trading-cards';
 const collectionName = 'monsters';
 
 db.initialize(dbName, collectionName, function(monstersCollection) { // success callback
-
     monsters.get("/", (req, res) => {
         // return all monsters that satisfy query parameters
         console.log(req.query);
