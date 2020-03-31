@@ -1,35 +1,13 @@
-const express = require('express')
-const app = express();
+const traps = require('express').Router();
 const int32 = require('mongodb').Int32;
-const root = require('./routes/index');
-const monstersRouter = require('./routes/monsters');
-const spellsRouter = require('./routes/spells');
-const trapsRouter = require('./routes/traps');
-
-// Connect root route to our application
-app.use('/', root);
-
-// Connect monster routes to application
-app.use('/monsters', monstersRouter);
-
-// Connect spell routes to application
-app.use('/spells', spellsRouter);
-
-// Connect spell routes to application
-app.use('/traps', trapsRouter);
 
 // db setup
-const db = require('./db');
+const db = require('../db2');
 const dbName = 'trading-cards';
-const collectionName = 'monsters';
+const collectionName = 'traps';
 
-// db init
-db.initialize(dbName, function(dbObject) { // success callback
-
-    // get collections
-    const trapsCollection = dbObject.collection('traps');
-
-/*     app.get("/traps", (req, res) => {
+db.initialize(dbName, collectionName, function(trapsCollection) { // success callback
+    traps.get("/", (req, res) => {
         // return all traps that satisfy query parameters
         console.log(req.query);
         let page = 1;
@@ -85,18 +63,17 @@ db.initialize(dbName, function(dbObject) { // success callback
         }
     });
 
-    app.get("/traps/:id", (req, res) => {
-        let trapId = req.params.id;
-        console.log(trapId);
-        trapsCollection.findOne({ id: new int32(trapId) }, (error, result) => {
+    traps.get("/:trapId", (req, res) => {
+        console.log(req.params.trapId);
+        trapsCollection.findOne({ id: new int32(req.params.trapId) }, (error, result) => {
             if (error) throw error;
             // return trap
             res.json(result);
         });
-    }); */
-}, function(err) { // failure callback
+    });
+
+}, function(err) { // failureCallback
     throw (err);
 });
 
-const port = process.env.PORT || 4000
-app.listen(port, () => console.log(`Listening on port ${port}`));
+module.exports = traps;
