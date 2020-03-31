@@ -5,7 +5,7 @@ const monstersRouter = require('./routes/monsters');
 const spellsRouter = require('./routes/spells');
 const trapsRouter = require('./routes/traps');
 
-// Connect root route to our application
+// Connect root route to application
 app.use('/', root);
 
 // Connect monster routes to application
