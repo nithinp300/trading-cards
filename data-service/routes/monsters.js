@@ -1,12 +1,15 @@
-const int32 = require("mongodb").Int32;
+const monsters = require('express').Router();
+const int32 = require('mongodb').Int32;
 
 // db setup
-const db = require('./db2');
+const db = require('../db2');
 const dbName = 'trading-cards';
 const collectionName = 'monsters';
 
-exports.list = function(req, res){
-    db.initialize(dbName, collectionName, function(dbCollection) { // success callback
+db.initialize(dbName, collectionName, function(monstersCollection) { // success callback
+
+    monsters.get("/", (req, res) => {
+        // return all monsters that satisfy query parameters
         console.log(req.query);
         let page = 1;
         let limit = 5;
@@ -28,7 +31,7 @@ exports.list = function(req, res){
         let skips = limit * (page - 1);
         if(typeof req.query.q !== "undefined"){
             //Search
-            dbCollection
+            monstersCollection
             .find({ $text: {$search : req.query.q } })
             .project({score: {$meta: "textScore"}})
             .sort({score: {$meta: "textScore"}})
@@ -48,7 +51,7 @@ exports.list = function(req, res){
                 sortByStr = req.query.sort.substring(1);
             }
             sortBy[sortByStr] = ascDescNum;
-            dbCollection.find().sort(sortBy)
+            monstersCollection.find().sort(sortBy)
             .skip(skips).limit(limit).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
@@ -62,27 +65,24 @@ exports.list = function(req, res){
                     filters[i] = req.query[i];
                 }
             }
-            dbCollection.find(filters)
+            monstersCollection.find(filters)
             .skip(skips).limit(limit).toArray((error, result) => {
                 if (error) throw error;
                 res.json(result);
             });
         }
-    }, function(err) { // failureCallback
-        throw (err);
     });
-}
 
-exports.view = function(res, res){
-    db.initialize(dbName, collectionName, function(monstersCollection) { // success callback\
-        let monsterId = req.params.id;
-        console.log(monsterId);
-        monstersCollection.findOne({ id: new int32(monsterId) }, (error, result) => {
+    monsters.get("/:monsterId", (req, res) => {
+        console.log(req.params.monsterId);
+        monstersCollection.findOne({ id: new int32(req.params.monsterId) }, (error, result) => {
             if (error) throw error;
             // return monster
             res.json(result);
         });
-    }, function(err) { // failureCallback
-        throw (err);
     });
-}
+}, function(err) { // failureCallback
+    throw (err);
+});
+
+module.exports = monsters;
