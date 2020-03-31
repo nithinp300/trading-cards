@@ -3,12 +3,16 @@ const app = express();
 const int32 = require('mongodb').Int32;
 const root = require('./routes/index');
 const monstersRouter = require('./routes/monsters');
+const spellsRouter = require('./routes/spells');
 
 // Connect root route to our application
 app.use('/', root);
 
 // Connect monster routes to application
 app.use('/monsters', monstersRouter);
+
+// Connect spell routes to application
+app.use('/spells', spellsRouter);
 
 // db setup
 const db = require('./db');
@@ -22,7 +26,7 @@ db.initialize(dbName, function(dbObject) { // success callback
     const spellsCollection = dbObject.collection('spells');
     const trapsCollection = dbObject.collection('traps');
 
-    app.get("/spells", (req, res) => {
+/*     app.get("/spells", (req, res) => {
         // return all spells that satisfy query parameters
         console.log(req.query);
         let page = 1;
@@ -76,7 +80,7 @@ db.initialize(dbName, function(dbObject) { // success callback
                 res.json(result);
             });
         }
-    });
+    }); */
 
     app.get("/traps", (req, res) => {
         // return all traps that satisfy query parameters
@@ -134,7 +138,7 @@ db.initialize(dbName, function(dbObject) { // success callback
         }
     });
 
-    app.get("/spells/:id", (req, res) => {
+/*     app.get("/spells/:id", (req, res) => {
         let spellId = req.params.id;
         console.log(spellId);
         spellsCollection.findOne({ id: new int32(spellId) }, (error, result) => {
@@ -142,7 +146,7 @@ db.initialize(dbName, function(dbObject) { // success callback
             // return spell
             res.json(result);
         });
-    });
+    }); */
 
     app.get("/traps/:id", (req, res) => {
         let trapId = req.params.id;
