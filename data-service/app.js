@@ -14,8 +14,10 @@ app.use('/monsters', monstersRouter);
 // Connect spell routes to application
 app.use('/spells', spellsRouter);
 
-// Connect traps routes to application
+// Connect trap routes to application
 app.use('/traps', trapsRouter);
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+module.exports = app; // for testing

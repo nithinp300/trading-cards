@@ -47,7 +47,16 @@ function insertSpells(db) {
       console.log('Spell Collection');
       console.log(count);
       console.log('Monster Collection');
-      setTimeout(insertMonsters, 2000, db);
+      const monsterCollection = db.collection('monsters');
+      monsterCollection.estimatedDocumentCount(function(err, monsterCount) {
+        if(monsterCount == 0){
+          setTimeout(insertMonsters, 2000, db);
+        }
+        else{
+          console.log(monsterCount);
+          client.close();
+        }
+      });
     }
   });
 }

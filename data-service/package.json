@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/nithinp300/trading-cards#readme",
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "express": "^4.17.1",
+    "mocha": "^7.1.1",
     "mongodb": "^3.5.4",
     "request": "^2.88.2"
   }
