@@ -2,7 +2,6 @@ import React from 'react';
 import {Card, Button} from 'react-bootstrap'
 
 export default function MonsterCard(props){
-  console.log(props.monster);
   return(
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src="https://storage.googleapis.com/ygoprodeck.com/pics/6983839.jpg" />
