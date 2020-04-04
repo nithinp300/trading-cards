@@ -6,6 +6,7 @@ import {
     Switch,
     Route
   } from 'react-router-dom';
+import Monsters from './Monsters'
 
 export default function App(){
   return(
@@ -48,15 +49,11 @@ export default function App(){
 function Home() {
     return <h2>Home</h2>;
   }
-  
-  function Monsters() {
-    return <h2>Monsters</h2>;
-  }
-  
-  function Spells() {
-    return <h2>Spells</h2>;
-  }
 
-  function Traps() {
-    return <h2>Traps</h2>;
-  }
+function Spells() {
+  return <h2>Spells</h2>;
+}
+
+function Traps() {
+  return <h2>Traps</h2>;
+}
