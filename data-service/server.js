@@ -1,9 +1,12 @@
-const express = require('express')
+const express = require('express');
+const cors = require('cors');
 const app = express();
 const root = require('./routes/index');
 const monstersRouter = require('./routes/monsters');
 const spellsRouter = require('./routes/spells');
 const trapsRouter = require('./routes/traps');
+
+app.use(cors());
 
 // Connect root route to application
 app.use('/', root);
