@@ -6,7 +6,7 @@ import {
     Switch,
     Route
   } from 'react-router-dom';
-import Monsters from './Monsters'
+import Monsters from './components/Monsters'
 
 export default function App(){
   return(

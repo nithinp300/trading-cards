@@ -11,7 +11,6 @@ class TradingCard extends Component {
         <Card.Body>
           <Card.Title>{this.props.monster.name}</Card.Title>
           <Card.Text>{this.props.monster.desc}</Card.Text>
-          <Button variant="primary">Go somewhere</Button>
         </Card.Body>
       </Card>
     )

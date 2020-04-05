@@ -1,0 +1,188 @@
+[
+  {
+    "_id": "5e58a8bf8e8a732220d27df1",
+    "id": 91231901,
+    "name": "\"A\" Cell Recombination Device",
+    "type": "Spell Card",
+    "desc": "Target 1 face-up monster on the field; send 1 \"Alien\" monster from your Deck to the Graveyard, and if you do, place A-Counters on that monster equal to the Level of the sent monster. During your Main Phase, except the turn this card was sent to the Graveyard: You can banish this card from your Graveyard; add 1 \"Alien\" monster from your Deck to your hand.",
+    "race": "Quick-Play",
+    "archetype": "Alien",
+    "card_sets": [
+      {
+        "set_name": "Invasion: Vengeance",
+        "set_code": "INOV-EN063",
+        "set_rarity": "Common",
+        "set_price": "$0.94"
+      }
+    ],
+    "card_images": [
+      {
+        "id": 91231901,
+        "image_url": "https://storage.googleapis.com/ygoprodeck.com/pics/91231901.jpg",
+        "image_url_small": "https://storage.googleapis.com/ygoprodeck.com/pics_small/91231901.jpg"
+      }
+    ],
+    "card_prices": [
+      {
+        "cardmarket_price": "0.12",
+        "tcgplayer_price": "0.12",
+        "ebay_price": "2.00",
+        "amazon_price": "1.15"
+      }
+    ]
+  },
+  {
+    "_id": "5e58a8bf8e8a732220d27e0f",
+    "id": 21323861,
+    "name": "Acid Rain",
+    "type": "Spell Card",
+    "desc": "Destroy all face-up Machine-Type monsters on the field.",
+    "race": "Normal",
+    "card_sets": [
+      {
+        "set_name": "Duel Terminal 2",
+        "set_code": "DT02-EN037",
+        "set_rarity": "Duel Terminal Normal Parallel",
+        "set_price": "$2.16"
+      },
+      {
+        "set_name": "Duelist League Series 8 participation card",
+        "set_code": "DL8-EN001",
+        "set_rarity": "Super Rare",
+        "set_price": "$3.87"
+      }
+    ],
+    "card_images": [
+      {
+        "id": 21323861,
+        "image_url": "https://storage.googleapis.com/ygoprodeck.com/pics/21323861.jpg",
+        "image_url_small": "https://storage.googleapis.com/ygoprodeck.com/pics_small/21323861.jpg"
+      }
+    ],
+    "card_prices": [
+      {
+        "cardmarket_price": "0.63",
+        "tcgplayer_price": "0.29",
+        "ebay_price": "1.89",
+        "amazon_price": "0.73"
+      }
+    ]
+  },
+  {
+    "_id": "5e58a8bf8e8a732220d27e2c",
+    "id": 87624166,
+    "name": "Ancient Forest",
+    "type": "Spell Card",
+    "desc": "When you activate this card, change any Defense Position monster(s) to face-up Attack Position. Flip Effects are not activated at this time. If a monster attacks, destroy it at the end of that turn's Battle Phase.",
+    "race": "Field",
+    "card_sets": [
+      {
+        "set_name": "Ancient Prophecy",
+        "set_code": "ANPR-EN048",
+        "set_rarity": "Super Rare",
+        "set_price": "$1.65"
+      }
+    ],
+    "card_images": [
+      {
+        "id": 87624166,
+        "image_url": "https://storage.googleapis.com/ygoprodeck.com/pics/87624166.jpg",
+        "image_url_small": "https://storage.googleapis.com/ygoprodeck.com/pics_small/87624166.jpg"
+      }
+    ],
+    "card_prices": [
+      {
+        "cardmarket_price": "0.67",
+        "tcgplayer_price": "0.80",
+        "ebay_price": "1.00",
+        "amazon_price": "4.95"
+      }
+    ]
+  },
+  {
+    "_id": "5e58a8bf8e8a732220d27df0",
+    "id": 64163367,
+    "name": "\"A\" Cell Incubator",
+    "type": "Spell Card",
+    "desc": "Each time an A-Counter(s) is removed from play by a card effect, place 1 A-Counter on this card. When this card is destroyed, distribute the A-Counters on this card among face-up monsters.",
+    "race": "Continuous",
+    "archetype": "Alien",
+    "card_sets": [
+      {
+        "set_name": "Gladiator's Assault",
+        "set_code": "GLAS-EN062",
+        "set_rarity": "Common",
+        "set_price": "$1.06"
+      }
+    ],
+    "card_images": [
+      {
+        "id": 64163367,
+        "image_url": "https://storage.googleapis.com/ygoprodeck.com/pics/64163367.jpg",
+        "image_url_small": "https://storage.googleapis.com/ygoprodeck.com/pics_small/64163367.jpg"
+      }
+    ],
+    "card_prices": [
+      {
+        "cardmarket_price": "0.15",
+        "tcgplayer_price": "0.16",
+        "ebay_price": "0.99",
+        "amazon_price": "0.88"
+      }
+    ]
+  },
+  {
+    "_id": "5e58a8bf8e8a732220d27df8",
+    "id": 8949584,
+    "name": "A Hero Lives",
+    "type": "Spell Card",
+    "desc": "If you control no face-up monsters: Pay half your LP; Special Summon 1 Level 4 or lower \"Elemental HERO\" monster from your Deck.",
+    "race": "Normal",
+    "archetype": "Elemental HERO",
+    "card_sets": [
+      {
+        "set_name": "Duelist Saga",
+        "set_code": "DUSA-EN087",
+        "set_rarity": "Ultra Rare",
+        "set_price": "$4.57"
+      },
+      {
+        "set_name": "Generation Force",
+        "set_code": "GENF-EN098",
+        "set_rarity": "Ultra Rare",
+        "set_price": "$5.95"
+      },
+      {
+        "set_name": "HERO Strike Structure Deck",
+        "set_code": "SDHS-EN026",
+        "set_rarity": "Common",
+        "set_price": "$1.83"
+      },
+      {
+        "set_name": "Legendary Duelists: Magical Hero",
+        "set_code": "LED6-EN022",
+        "set_rarity": "Common",
+        "set_price": "$0.95"
+      }
+    ],
+    "banlist_info": {
+      "ban_tcg": "Limited",
+      "ban_ocg": "Semi-Limited"
+    },
+    "card_images": [
+      {
+        "id": 8949584,
+        "image_url": "https://storage.googleapis.com/ygoprodeck.com/pics/8949584.jpg",
+        "image_url_small": "https://storage.googleapis.com/ygoprodeck.com/pics_small/8949584.jpg"
+      }
+    ],
+    "card_prices": [
+      {
+        "cardmarket_price": "0.08",
+        "tcgplayer_price": "0.13",
+        "ebay_price": "4.29",
+        "amazon_price": "3.08"
+      }
+    ]
+  }
+]
