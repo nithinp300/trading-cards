@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import MonsterCard from './MonsterCard'
 import PaginationBar from './PaginationBar'
 import {Container, Row, Col} from 'react-bootstrap'
+import TradingCard from './TradingCard'
 
 class Monsters extends Component {
   constructor(){
     super();
     this.state = {
+      loading: false,
       monsters: [
         {
           name: "Tornado Dragon",
@@ -32,29 +34,32 @@ class Monsters extends Component {
     };
   }
 
-  // componentDidMount(){
-  //   fetch("http://localhost:5000/monsters")
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       this.setState({
-  //         monsters: data
-  //       })
-  //     })
-  // }
+  componentDidMount(){
+    this.setState({loading: true})
+    fetch("http://localhost:5000/monsters")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          loading: false,
+          monsters: data
+        })
+      })
+  }
 
   render(){
     let monsterCards = this.state.monsters.map(monster => {
       return(
         <Col md="4">
-          <MonsterCard monster={monster}></MonsterCard>
+          <TradingCard monster={monster}></TradingCard>
         </Col>
       )
     })
+    let isLoaded = this.state.loading ? "Loading..." : monsterCards
     return(
       <div>
         <Container fluid="md">
           <Row>
-            {monsterCards}
+            {isLoaded}
           </Row>
           <br></br>
           <Row className="justify-content-md-center">
