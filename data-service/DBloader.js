@@ -88,9 +88,7 @@ function insertMonsters(db, i) {
 
 const insertCards = function(collection, body, callback) {
     numCards = body.length;
-    // Get the collection
-    //const collection = db.collection('traps');
-    // Insert some documents
+    // Insert documents
     collection.insertMany(body, function(err, result) {
       assert.equal(err, null);
       assert.equal(numCards, result.result.n);
