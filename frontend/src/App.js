@@ -1,12 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
-import {
-    BrowserRouter,
-    Switch,
-    Route
-  } from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Monsters from './components/Monsters'
+import Error from './components/Error'
 
 export default function App(){
   return(
@@ -25,22 +22,13 @@ export default function App(){
         </Form>
       </Navbar>
       <BrowserRouter>
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
-          <Switch>
-          <Route path="/Traps">
-              <Traps />
-          </Route>
-          <Route path="/Spells">
-              <Spells />
-          </Route>
-          <Route path="/Monsters">
-              <Monsters />
-          </Route>
-          <Route path="/">
-              <Home />
-          </Route>
-          </Switch>
+        <Switch>
+          <Route path="/" exact component={Home}/>
+          <Route path="/Traps" component={Traps}/>
+          <Route path="/Spells" component={Spells}/>
+          <Route path="/Monsters" component={Monsters}/>
+          <Route component={Error}/>
+        </Switch>
       </BrowserRouter>
     </div>
   );
