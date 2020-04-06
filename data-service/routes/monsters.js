@@ -53,7 +53,6 @@ db.initialize(dbName, collectionName, function(monstersCollection) { // success 
       monstersCollection.find().sort(sortBy)
       .skip(skips).limit(limit).toArray((error, data) => {
         if (error) throw error;
-        //res.json(result);
         monstersCollection.countDocuments({}, (error, count) => {
           if (error) throw error;
           let result = new Object();

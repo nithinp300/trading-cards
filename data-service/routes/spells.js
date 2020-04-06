@@ -42,9 +42,18 @@ db.initialize(dbName, collectionName, function(spellsCollection) { // success ca
             }
             sortBy[sortByStr] = ascDescNum;
             spellsCollection.find().sort(sortBy)
-            .skip(skips).limit(limit).toArray((error, result) => {
+            .skip(skips).limit(limit).toArray((error, data) => {
                 if (error) throw error;
-                res.json(result);
+                spellsCollection.countDocuments({}, (error, count) => {
+                  if (error) throw error;
+                  let result = new Object();
+                  result.page = page;
+                  result.per_page = limit;
+                  result.total = count;
+                  result.total_pages = Math.ceil(count / limit);
+                  result.data = data;
+                  res.json(result);
+                });
             });
         }
         else{
@@ -56,9 +65,18 @@ db.initialize(dbName, collectionName, function(spellsCollection) { // success ca
                 }
             }
             spellsCollection.find(filters)
-            .skip(skips).limit(limit).toArray((error, result) => {
+            .skip(skips).limit(limit).toArray((error, data) => {
                 if (error) throw error;
-                res.json(result);
+                spellsCollection.countDocuments(filters, (error, count) => {
+                  if (error) throw error;
+                  let result = new Object();
+                  result.page = page;
+                  result.per_page = limit;
+                  result.total = count;
+                  result.total_pages = Math.ceil(count / limit);
+                  result.data = data;
+                  res.json(result);
+                });
             });
         }
     });
