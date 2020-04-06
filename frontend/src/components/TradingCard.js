@@ -10,7 +10,6 @@ class TradingCard extends Component {
         <Card.Img variant="top" src={this.props.monster.card_images[0].image_url} />
         <Card.Body>
           <Card.Title>{this.props.monster.name}</Card.Title>
-          <Card.Text>{this.props.monster.desc}</Card.Text>
         </Card.Body>
       </Card>
     )
