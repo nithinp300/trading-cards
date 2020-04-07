@@ -1,7 +1,7 @@
 const monsters = require('express').Router();
 const int32 = require('mongodb').Int32;
 
-// db setup
+// database setup
 const db = require('../db');
 const dbName = 'trading-cards';
 const collectionName = 'monsters';
