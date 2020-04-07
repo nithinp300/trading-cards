@@ -6,9 +6,6 @@
   "engines": {
     "node": "10.x"
   },
-  "scripts": {
-    "heroku-postbuild": "npm run build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nithinp300/trading-cards.git"
