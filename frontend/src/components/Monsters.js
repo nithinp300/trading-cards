@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PaginationBar from './PaginationBar'
-import {Container, Row, Col} from 'react-bootstrap'
+import {Container, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import MonsterCard from './MonsterCard'
@@ -24,7 +24,7 @@ class Monsters extends Component {
   }
 
   makeHttpRequestWithPage = async pageNumber => {
-    const response = await fetch(`http://localhost:5000/monsters?limit=6&page=${pageNumber}`, {
+    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -54,6 +54,18 @@ class Monsters extends Component {
     let isLoaded = this.state.loading ? "Loading..." : monsterCards
     return(
       <div>
+        <div style={{float:"right"}}>
+          <DropdownButton id="dropdown-basic-button" title="Sort by">
+            <Dropdown.Item href="#/action-1">Name: A to Z</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Name: Z to A</Dropdown.Item>
+            <Dropdown.Item href="#/action-3">ATK: Low to High</Dropdown.Item>
+            <Dropdown.Item href="#/action-4">ATK: High to Low</Dropdown.Item>
+            <Dropdown.Item href="#/action-4">DEF: Low to High</Dropdown.Item>
+            <Dropdown.Item href="#/action-5">DEF: High to Low</Dropdown.Item>
+            <Dropdown.Item href="#/action-5">Level: Low to High</Dropdown.Item>
+            <Dropdown.Item href="#/action-5">Level: High to Low</Dropdown.Item>
+          </DropdownButton>
+        </div>
         <Container fluid="md">
           <Row>
             {isLoaded}
