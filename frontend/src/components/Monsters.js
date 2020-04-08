@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PaginationBar from './PaginationBar'
-import {Container, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap'
+import {Container, Row, Col, Dropdown, DropdownButton, ListGroup} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import MonsterCard from './MonsterCard'
@@ -67,6 +67,15 @@ class Monsters extends Component {
           </DropdownButton>
         </div>
         <Container fluid="md">
+          <Row >
+          <ListGroup>
+            <ListGroup.Item action>Cras justo odio</ListGroup.Item>
+            <ListGroup.Item action>Dapibus ac facilisis in</ListGroup.Item>
+            <ListGroup.Item action>Morbi leo risus</ListGroup.Item>
+            <ListGroup.Item action>Porta ac consectetur ac</ListGroup.Item>
+            <ListGroup.Item action>Vestibulum at eros</ListGroup.Item>
+          </ListGroup>
+          </Row>
           <Row>
             {isLoaded}
           </Row>
