@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PaginationBar from './PaginationBar'
-import {Container, Row, Col, Dropdown, DropdownButton, ListGroup} from 'react-bootstrap'
+import {Container, Row, Col, Dropdown, DropdownButton, Form, Button} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import MonsterCard from './MonsterCard'
@@ -24,6 +24,7 @@ class Monsters extends Component {
   }
 
   makeHttpRequestWithPage = async pageNumber => {
+    document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
     const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}`, {
       method: 'GET',
       headers: {
@@ -54,6 +55,7 @@ class Monsters extends Component {
     let isLoaded = this.state.loading ? "Loading..." : monsterCards
     return(
       <div>
+        <br></br>
         <div style={{float:"right"}}>
           <DropdownButton id="dropdown-basic-button" title="Sort by">
             <Dropdown.Item href="#/action-1">Name: A to Z</Dropdown.Item>
@@ -68,13 +70,20 @@ class Monsters extends Component {
         </div>
         <Container fluid="md">
           <Row >
-          <ListGroup>
-            <ListGroup.Item action>Cras justo odio</ListGroup.Item>
-            <ListGroup.Item action>Dapibus ac facilisis in</ListGroup.Item>
-            <ListGroup.Item action>Morbi leo risus</ListGroup.Item>
-            <ListGroup.Item action>Porta ac consectetur ac</ListGroup.Item>
-            <ListGroup.Item action>Vestibulum at eros</ListGroup.Item>
-          </ListGroup>
+            <Form className="checkboxes">
+              <div key={`inline-checkbox`} className="mb-3">
+                <Form.Label>Attributes: &nbsp;</Form.Label>
+                <Form.Check inline label="Dark" type="checkbox" id={`inline-checkbox-1`} />
+                <Form.Check inline label="Divine" type="checkbox" id={`inline-checkbox-2`} />
+                <Form.Check inline label="Earth" type="checkbox" id={`inline-checkbox-3`} />
+                <Form.Check inline label="Fire" type="checkbox" id={`inline-checkbox-4`} />
+                <Form.Check inline label="Light" type="checkbox" id={`inline-checkbox-5`} />
+                <Form.Check inline label="Water" type="checkbox" id={`inline-checkbox-6`} />
+                <Form.Check inline label="Wind" type="checkbox" id={`inline-checkbox-7`} />
+                <Button variant="primary">Filter</Button>
+                <Button onClick={() => this.makeHttpRequestWithPage(1)} style={{marginLeft:"1rem"}} variant="secondary">Clear All</Button>
+              </div>
+            </Form>
           </Row>
           <Row>
             {isLoaded}

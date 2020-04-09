@@ -6,7 +6,7 @@ class TradingCard extends Component {
     if (!this.props.monster.card_images) return null;
     console.log(this.props.monster.card_images)
     return(
-      <Card style={{ width: '18rem' }}>
+      <Card style={{margin:"2rem"}}>
         <Card.Img variant="top" src={this.props.monster.card_images[0].image_url} />
         <Card.Body>
           <Card.Title>{this.props.monster.name}</Card.Title>
