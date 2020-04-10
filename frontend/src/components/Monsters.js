@@ -19,16 +19,17 @@ class Monsters extends Component {
       attribute: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
-    this.makeHttpRequestWithPage(1,"")
+    this.makeHttpRequestWithPage(1, "")
   }
 
-  makeHttpRequestWithPage = async (pageNumber) => {
-    document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
-    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}&attribute=${this.state.attribute}`, {
+  makeHttpRequestWithPage = async (pageNumber, attribute) => {
+    if(!attribute){
+      attribute = this.state.attribute
+    }
+    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}&attribute=${attribute}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -71,10 +72,7 @@ class Monsters extends Component {
 
   handleChange(event){
     this.setState({attribute: event.target.value})
-  }
-
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.attribute);
+    this.makeHttpRequestWithPage(1, event.target.value)
   }
 
   render(){
