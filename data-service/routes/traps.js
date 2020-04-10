@@ -60,7 +60,7 @@ db.initialize(dbName, collectionName, function(trapsCollection) { // success cal
             // Filter
             let filters = new Object();
             for(let i in req.query){
-                if(i !== "page" && i !== "limit"){
+                if(i !== "page" && i !== "limit" && req.query[i] !== ""){
                     filters[i] = req.query[i];
                 }
             }
