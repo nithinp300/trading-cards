@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PaginationBar from './PaginationBar'
-import {Container, Row, Col, Dropdown, DropdownButton, Form, Button} from 'react-bootstrap'
+import {Container, Row, Col, Dropdown, DropdownButton, Spinner} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import MonsterCard from './MonsterCard'
@@ -71,7 +71,7 @@ class Monsters extends Component {
   }
 
   handleChange(event){
-    this.setState({attribute: event.target.value})
+    this.setState({attribute: event.target.value, isLoading: true})
     this.makeHttpRequestWithPage(1, event.target.value)
   }
 
@@ -83,7 +83,7 @@ class Monsters extends Component {
         </Col>
       )
     })
-    let isLoaded = this.state.isLoading ? "Loading..." : monsterCards
+    let isLoaded = this.state.isLoading ? <Spinner style={{margin: "auto"}} animation="border" /> : monsterCards
     return(
       <div>
         <br></br>
@@ -112,23 +112,12 @@ class Monsters extends Component {
               <option value="WATER">Water</option>
               <option value="WIND">Wind</option>
             </select>
-            <h2>{this.state.attribute}</h2>
-            {/* <Form onSubmit={this.handleSubmit}>
-              <Form.Label>Attributes: &nbsp;</Form.Label>
-              <Form.Control as="select" value="Attribute">
-                <option>Dark</option>
-                <option>Divine</option>
-              </Form.Control>
-              <Form.Check inline name="attribute" value="DARK" label="Dark" type="radio" id={`inline-radio-1`} />
-              <Form.Check inline name="attribute" value="DIVINE" label="Divine" type="radio" id={`inline-radio-2`} />
-              <Form.Check inline name="attribute" value="EARTH" label="Earth" type="radio" id={`inline-radio-3`} />
-              <Form.Check inline name="attribute" value="FIRE" label="Fire" type="radio" id={`inline-radio-4`} />
-              <Form.Check inline name="attribute" value="LIGHT" label="Light" type="radio" id={`inline-radio-5`} />
-              <Form.Check inline name="attribute" value="WATER" label="Water" type="radio" id={`inline-radio-6`} />
-              <Form.Check inline name="attribute" value="WIND" label="Wind" type="radio" id={`inline-radio-7`} />
-              <Button variant="primary" type="submit">Filter</Button>
-              <Button onClick={() => this.handleClearAllClick()} style={{marginLeft:"1rem"}} variant="secondary">Clear</Button>
-            </Form> */}
+            <label>&nbsp; Monster Type &nbsp;</label>
+            <select value={this.state.type} name="type">
+            </select>
+            <label>&nbsp; Archetype &nbsp;</label>
+            <select value={this.state.type} name="type">
+            </select>
           </Row>
           <Row>
             {isLoaded}
