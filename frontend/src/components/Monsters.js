@@ -10,22 +10,25 @@ class Monsters extends Component {
   constructor(){
     super();
     this.state = {
-      loading: false,
+      isLoading: true,
       monsters: MonstersData.data,
       total: MonstersData.total,
       per_page: MonstersData.per_page,
       current_page: MonstersData.page,
       last_page: MonstersData.total_pages,
+      attribute: ""
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
-    this.makeHttpRequestWithPage(1)
+    this.makeHttpRequestWithPage(1,"")
   }
 
-  makeHttpRequestWithPage = async pageNumber => {
+  makeHttpRequestWithPage = async (pageNumber) => {
     document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
-    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}`, {
+    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}&attribute=${this.state.attribute}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -36,12 +39,42 @@ class Monsters extends Component {
     const data = await response.json();
 
     this.setState({
+      isLoading: false,
       monsters: data.data,
       total: data.total,
       per_page: data.per_page,
       current_page: data.page,
       last_page: data.total_pages
     });
+  }
+
+  makeRequest = async pageNumber => {
+    document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+    fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}`)
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        isLoading: false,
+        monsters: data.data,
+        total: data.total,
+        per_page: data.per_page,
+        current_page: data.page,
+        last_page: data.total_pages
+      })
+    })
+  }
+
+  handleClearClick(){
+    document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+    this.makeHttpRequestWithPage(1)
+  }
+
+  handleChange(event){
+    this.setState({attribute: event.target.value})
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.attribute);
   }
 
   render(){
@@ -52,7 +85,7 @@ class Monsters extends Component {
         </Col>
       )
     })
-    let isLoaded = this.state.loading ? "Loading..." : monsterCards
+    let isLoaded = this.state.isLoading ? "Loading..." : monsterCards
     return(
       <div>
         <br></br>
@@ -70,20 +103,34 @@ class Monsters extends Component {
         </div>
         <Container fluid="md">
           <Row >
-            <Form className="checkboxes">
-              <div key={`inline-checkbox`} className="mb-3">
-                <Form.Label>Attributes: &nbsp;</Form.Label>
-                <Form.Check inline label="Dark" type="checkbox" id={`inline-checkbox-1`} />
-                <Form.Check inline label="Divine" type="checkbox" id={`inline-checkbox-2`} />
-                <Form.Check inline label="Earth" type="checkbox" id={`inline-checkbox-3`} />
-                <Form.Check inline label="Fire" type="checkbox" id={`inline-checkbox-4`} />
-                <Form.Check inline label="Light" type="checkbox" id={`inline-checkbox-5`} />
-                <Form.Check inline label="Water" type="checkbox" id={`inline-checkbox-6`} />
-                <Form.Check inline label="Wind" type="checkbox" id={`inline-checkbox-7`} />
-                <Button variant="primary">Filter</Button>
-                <Button onClick={() => this.makeHttpRequestWithPage(1)} style={{marginLeft:"1rem"}} variant="secondary">Clear All</Button>
-              </div>
-            </Form>
+            <label>Attribute &nbsp;</label>
+            <select value={this.state.attribute} onChange={this.handleChange} name="attribute">
+              <option value="">Choose...</option>
+              <option value="DARK">Dark</option>
+              <option value="DIVINE">Divine</option>
+              <option value="EARTH">Earth</option>
+              <option value="FIRE">Fire</option>
+              <option value="LIGHT">Light</option>
+              <option value="WATER">Water</option>
+              <option value="WIND">Wind</option>
+            </select>
+            <h2>{this.state.attribute}</h2>
+            {/* <Form onSubmit={this.handleSubmit}>
+              <Form.Label>Attributes: &nbsp;</Form.Label>
+              <Form.Control as="select" value="Attribute">
+                <option>Dark</option>
+                <option>Divine</option>
+              </Form.Control>
+              <Form.Check inline name="attribute" value="DARK" label="Dark" type="radio" id={`inline-radio-1`} />
+              <Form.Check inline name="attribute" value="DIVINE" label="Divine" type="radio" id={`inline-radio-2`} />
+              <Form.Check inline name="attribute" value="EARTH" label="Earth" type="radio" id={`inline-radio-3`} />
+              <Form.Check inline name="attribute" value="FIRE" label="Fire" type="radio" id={`inline-radio-4`} />
+              <Form.Check inline name="attribute" value="LIGHT" label="Light" type="radio" id={`inline-radio-5`} />
+              <Form.Check inline name="attribute" value="WATER" label="Water" type="radio" id={`inline-radio-6`} />
+              <Form.Check inline name="attribute" value="WIND" label="Wind" type="radio" id={`inline-radio-7`} />
+              <Button variant="primary" type="submit">Filter</Button>
+              <Button onClick={() => this.handleClearAllClick()} style={{marginLeft:"1rem"}} variant="secondary">Clear</Button>
+            </Form> */}
           </Row>
           <Row>
             {isLoaded}
