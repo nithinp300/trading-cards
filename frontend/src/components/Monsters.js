@@ -5,6 +5,7 @@ import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import MonsterCard from './MonsterCard'
 import Pagination from 'react-bootstrap/Pagination'
+import FilterSort from './FilterSort'
 
 class Monsters extends Component {
   constructor(){
@@ -96,38 +97,13 @@ class Monsters extends Component {
     return(
       <div>
         <br></br>
-        <div style={{float:"right"}}>
-          <label>Sort by &nbsp;</label>
-          <select value={this.state.sortBy} onChange={this.handleChange} name="sortBy">
-            <option value="name">Name: A to Z</option>
-            <option value="-name">Name: Z to A</option>
-            <option value="atk">ATK: Low to High</option>
-            <option value="-atk">ATK: High to Low</option>
-            <option value="def">DEF: Low to High</option>
-            <option value="-def">DEF: High to Low</option>
-            <option value="level">Level: Low to High</option>
-            <option value="-level">Level: High to Low</option>
-          </select>
-        </div>
+        <FilterSort 
+          handleChange={this.handleChange}
+          {...this.state}>
+        </FilterSort>
         <Container fluid="md">
-          <Row >
-            <label>Attribute: &nbsp;</label>
-            <select value={this.state.attribute} onChange={this.handleChange} name="attribute">
-              <option value="">Choose</option>
-              <option value="DARK">Dark</option>
-              <option value="DIVINE">Divine</option>
-              <option value="EARTH">Earth</option>
-              <option value="FIRE">Fire</option>
-              <option value="LIGHT">Light</option>
-              <option value="WATER">Water</option>
-              <option value="WIND">Wind</option>
-            </select>
-            <label>&nbsp; Monster Type: &nbsp;</label>
-            <select value={this.state.type} name="type">
-            </select>
-            <label>&nbsp; Archetype: &nbsp;</label>
-            <select value={this.state.type} name="type">
-            </select>
+          <Row>
+            <p>&nbsp;</p>
           </Row>
           <Row>
             {isLoaded}

@@ -4,7 +4,6 @@ import {Card, Button} from 'react-bootstrap'
 class TradingCard extends Component {
   render(){
     if (!this.props.monster.card_images) return null;
-    console.log(this.props.monster.card_images)
     return(
       <Card style={{margin:"2rem"}}>
         <Card.Img variant="top" src={this.props.monster.card_images[0].image_url} />
