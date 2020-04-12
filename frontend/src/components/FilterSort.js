@@ -22,12 +22,12 @@ function FilterSort(props) {
   return(
     <div>
       <div style={{float:"left"}}>
-        <label>&nbsp; Monster Type: &nbsp;</label>
+        <label>&nbsp; Monster Type:&nbsp;</label>
         <select value={props.monsterType} onChange={props.handleChange} name="monsterType">
           <option value="">Choose</option>
           {MonsterOptions}
         </select>
-        <label>&nbsp;Attribute: &nbsp;</label>
+        <label>&nbsp; Attribute:&nbsp;</label>
         <select value={props.attribute} onChange={props.handleChange} name="attribute">
           <option value="">Choose</option>
           <option value="DARK">Dark</option>
@@ -38,7 +38,7 @@ function FilterSort(props) {
           <option value="WATER">Water</option>
           <option value="WIND">Wind</option>
         </select>
-        <label>&nbsp; Type: &nbsp;</label>
+        <label>&nbsp; Type:&nbsp;</label>
         <select value={props.type} onChange={props.handleChange} name="type">
           <option value="">Choose</option>
           {TypeOptions}

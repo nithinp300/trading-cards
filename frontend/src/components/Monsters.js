@@ -3,8 +3,6 @@ import PaginationBar from './PaginationBar'
 import {Container, Row, Col, Spinner} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
-import MonsterCard from './MonsterCard'
-import Pagination from 'react-bootstrap/Pagination'
 import FilterSort from './FilterSort'
 
 class Monsters extends Component {
