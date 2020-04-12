@@ -11,17 +11,22 @@ function FilterSort(props) {
   let MonsterOptions = monsterTypeData.map(typeName => {
     return(<option value={typeName}>{typeName}</option>)
   })
-  let typeData = ['continuous', 'zombie', 'fiend', 'normal', 
-  'quick-play', 'rock', 'warrior', 'winged beast', 'spellcaster', 
-  'beast', 'fairy', 'equip', 'field', 'fish', 'beast-warrior', 
-  'thunder', 'machine', 'sea serpent', 'aqua', 'plant', 
-  'dragon', 'reptile', 'counter', 'psychic', 'insect', 'pyro', 
-  'dinosaur', 'wyrm', 'cyberse', 'ritual', 'divine-beast', 
-  'creator-god', 'cyverse', 'mai', 'pegasus', 'ishizu', 'joey', 
-  'kaiba', 'yugi']
+  let typeData = ['Aqua', 'Beast', 'Beast-Warrior', 'Cyberse', 
+  'Dinosaur', 'Divine-Beast', 'Dragon', 'Fairy', 'Fiend', 
+  'Fish', 'Insect', 'Machine', 'Plant', 'Psychic', 'Pyro', 
+  'Reptile', 'Rock', 'Sea Serpent', 'Spellcaster', 'Thunder', 
+  'Warrior', 'Winged Beast', 'Wyrm', 'Zombie']
+  let TypeOptions = typeData.map(typeName => {
+    return(<option value={typeName}>{typeName}</option>)
+  })
   return(
     <div>
       <div style={{float:"left"}}>
+        <label>&nbsp; Monster Type: &nbsp;</label>
+        <select value={props.monsterType} onChange={props.handleChange} name="monsterType">
+          <option value="">Choose</option>
+          {MonsterOptions}
+        </select>
         <label>&nbsp;Attribute: &nbsp;</label>
         <select value={props.attribute} onChange={props.handleChange} name="attribute">
           <option value="">Choose</option>
@@ -33,13 +38,10 @@ function FilterSort(props) {
           <option value="WATER">Water</option>
           <option value="WIND">Wind</option>
         </select>
-        <label>&nbsp; Monster Type: &nbsp;</label>
-        <select value={props.monsterType} onChange={props.handleChange} name="monsterType">
+        <label>&nbsp; Type: &nbsp;</label>
+        <select value={props.type} onChange={props.handleChange} name="type">
           <option value="">Choose</option>
-          {MonsterOptions}
-        </select>
-        <label>&nbsp; Archetype: &nbsp;</label>
-        <select value={props.type} name="type">
+          {TypeOptions}
         </select>
       </div>
       <div style={{float:"right"}}>

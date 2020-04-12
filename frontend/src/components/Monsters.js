@@ -19,7 +19,8 @@ class Monsters extends Component {
       last_page: MonstersData.total_pages,
       sortBy: "name",
       attribute: "",
-      monsterType: ""
+      monsterType: "",
+      type: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
@@ -39,7 +40,10 @@ class Monsters extends Component {
     if(typeof params.monsterType === "undefined"){
       params["monsterType"] = this.state.monsterType
     }
-    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${pageNumber}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}`, {
+    if(typeof params.type === "undefined"){
+      params["type"] = this.state.type
+    }
+    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${pageNumber}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}&race=${params.type}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
