@@ -105,7 +105,7 @@ class Monsters extends Component {
     return(
       <div>
         <br></br>
-        <FilterSort 
+        <FilterSort
           handleChange={this.handleChange}
           {...this.state}>
         </FilterSort>
@@ -117,19 +117,10 @@ class Monsters extends Component {
             {isLoaded}
           </Row>
           <Row>
-            <div style={{margin:"auto"}}>
-              <Pagination>
-                <Pagination.First disabled={this.state.current_page === 1} 
-                onClick={() => this.handlePaginationClick(1)}/>
-                <Pagination.Prev disabled={this.state.current_page === 1}
-                onClick={() => this.handlePaginationClick(this.state.current_page-1)}/>
-                <Pagination.Item>{this.state.current_page}</Pagination.Item>
-                <Pagination.Next disabled={this.state.current_page === this.state.last_page} 
-                onClick={() => this.handlePaginationClick(this.state.current_page+1)}/>
-                <Pagination.Last disabled={this.state.current_page === this.state.last_page} 
-                onClick={() => this.handlePaginationClick(this.state.last_page)}/>
-              </Pagination>
-            </div>
+            <PaginationBar
+              handlePaginationClick={this.handlePaginationClick}
+              {...this.state}>
+            </PaginationBar>
           </Row>
         </Container>
       </div>
