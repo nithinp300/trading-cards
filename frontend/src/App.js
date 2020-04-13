@@ -4,6 +4,7 @@ import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Monsters from './components/Monsters'
 import Error from './components/Error'
+import CardInstance from './components/CardInstance'
 
 export default function App(){
   return(
@@ -26,7 +27,8 @@ export default function App(){
           <Route path="/" exact component={Home}/>
           <Route path="/Traps" component={Traps}/>
           <Route path="/Spells" component={Spells}/>
-          <Route path="/Monsters" component={Monsters}/>
+          <Route path="/Monsters" exact component={Monsters}/>
+          <Route path="/Monsters/:id" component={CardInstance}/>
           <Route component={Error}/>
         </Switch>
       </BrowserRouter>

@@ -4,6 +4,7 @@ import {Container, Row, Col, Spinner} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import FilterSort from './FilterSort'
+import {Link, useRouteMatch} from 'react-router-dom';
 
 class Monsters extends Component {
   constructor(){
@@ -92,10 +93,11 @@ class Monsters extends Component {
   }
 
   render(){
+    let url = "/monsters"
     let monsterCards = this.state.monsters.map(monster => {
       return(
         <Col md="4">
-          <TradingCard monster={monster}></TradingCard>
+          <TradingCard monster={monster} url={url}></TradingCard>
         </Col>
       )
     })
