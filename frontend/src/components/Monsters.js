@@ -20,7 +20,8 @@ class Monsters extends Component {
       sortBy: "name",
       attribute: "",
       monsterType: "",
-      type: ""
+      type: "",
+      searchQuery: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
@@ -48,6 +49,9 @@ class Monsters extends Component {
     if(typeof params.type === "undefined"){
       params["type"] = this.state.type
     }
+    if(typeof params["searchQuery"] === "undefined"){
+      params["searchQuery"] = this.state.searchQuery
+    }
     const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${params.page}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}&race=${params.type}`, {
       method: 'GET',
       headers: {
@@ -68,19 +72,24 @@ class Monsters extends Component {
     });
   }
 
-  makeRequest = async pageNumber => {
-    fetch(`https://yugioh-data-service.herokuapp.com/monsters?limit=6&page=${pageNumber}`)
-    .then(res => res.json())
-    .then(data => {
-      this.setState({
-        isLoading: false,
-        monsters: data.data,
-        total: data.total,
-        per_page: data.per_page,
-        current_page: data.page,
-        last_page: data.total_pages
+  makeSearchRequest = async params => {
+    if(typeof params.searchQuery === "undefined" || params.searchQuery === ""){
+      this.makeHttpRequestWithPage(params)
+    }
+    else{
+      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${params.searchQuery}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          isLoading: false,
+          monsters: data,
+          total: data.length,
+          per_page: data.length,
+          current_page: 1,
+          last_page: 1
+        })
       })
-    })
+    }
   }
 
   handleClearClick(){
@@ -90,7 +99,13 @@ class Monsters extends Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value, isLoading: true, current_page: 1})
-    this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
+    if(event.target.name === "searchQuery"){
+      this.makeSearchRequest({[event.target.name]: event.target.value})
+    }
+    else{
+      this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
+    }
+    //this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
   }
 
   handlePaginationClick(page) {
