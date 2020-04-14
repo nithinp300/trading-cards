@@ -7,7 +7,7 @@ class TradingCard extends Component {
     if (!this.props.monster.card_images) return null;
     return(
       <div>
-        <Link style={{textDecoration:"none"}} to={`${this.props.url}/${this.props.monster.id}`}>
+        <Link to={`${this.props.url}/${this.props.monster.id}`} style={{textDecoration:"none"}}>
           <Card style={{margin:"2rem"}}>
             <Card.Img variant="top" src={this.props.monster.card_images[0].image_url} />
             <Card.Body>

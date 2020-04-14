@@ -43,6 +43,7 @@ function FilterSort(props) {
           <option value="">Choose</option>
           {TypeOptions}
         </select>
+        {/* <input type="text" placehold></input> */}
       </div>
       <div style={{float:"right"}}>
         <label>Sort by &nbsp;</label>

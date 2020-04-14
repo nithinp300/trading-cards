@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Image} from 'react-bootstrap'
 import {Link, useRouteMatch} from 'react-router-dom';
 
 class TradingCard extends Component {
@@ -23,7 +22,7 @@ class TradingCard extends Component {
     console.log(this.state.cardData)
     if (!this.state.cardData.card_images) return null
     let cardSets = this.state.cardData.card_sets
-    let sets = []
+    let sets = ""
     if(typeof cardSets === "undefined"){
       sets = <h5>None</h5>
     }

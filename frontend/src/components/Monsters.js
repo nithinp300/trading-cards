@@ -5,6 +5,7 @@ import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
 import FilterSort from './FilterSort'
 import {Link, useRouteMatch} from 'react-router-dom';
+import queryString from 'query-string'
 
 class Monsters extends Component {
   constructor(){
@@ -26,13 +27,17 @@ class Monsters extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props)
-    this.makeHttpRequestWithPage(1, {})
+    console.log(this.props.location.search)
+    let params = queryString.parse(this.props.location.search)
+    this.makeHttpRequestWithPage(params)
   }
 
-  makeHttpRequestWithPage = async (pageNumber, params) => {
+  makeHttpRequestWithPage = async (params) => {
+    if(typeof params["page"] === "undefined"){
+      params["page"] = this.state.current_page
+    }
     if(typeof params.attribute === "undefined"){
-      params.attribute = this.state.attribute
+      params["attribute"] = this.state.attribute
     }
     if(typeof params.sortBy === "undefined"){
       params["sortBy"] = this.state.sortBy
@@ -43,7 +48,7 @@ class Monsters extends Component {
     if(typeof params.type === "undefined"){
       params["type"] = this.state.type
     }
-    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${pageNumber}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}&race=${params.type}`, {
+    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${params.page}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}&race=${params.type}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -84,13 +89,13 @@ class Monsters extends Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value, isLoading: true})
-    this.makeHttpRequestWithPage(1, {[event.target.name]: event.target.value})
+    this.setState({[event.target.name]: event.target.value, isLoading: true, current_page: 1})
+    this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
   }
 
   handlePaginationClick(page) {
-    this.setState({isLoading: true})
-    this.makeHttpRequestWithPage(page, {})
+    this.setState({current_page: page, isLoading: true})
+    this.makeHttpRequestWithPage({page: page})
   }
 
   render(){
