@@ -4,7 +4,6 @@ import {Link, useRouteMatch} from 'react-router-dom';
 
 class TradingCard extends Component {
   render(){
-    console.log(this.props.url)
     if (!this.props.monster.card_images) return null;
     return(
       <div>

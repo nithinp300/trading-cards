@@ -26,6 +26,7 @@ class Monsters extends Component {
   }
 
   componentDidMount(){
+    console.log(this.props)
     this.makeHttpRequestWithPage(1, {})
   }
 
