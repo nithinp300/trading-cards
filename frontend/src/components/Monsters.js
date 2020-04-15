@@ -21,16 +21,24 @@ class Monsters extends Component {
       attribute: "",
       monsterType: "",
       type: "",
-      searchQuery: ""
+      searchQuery: "",
+      params: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
   }
 
   componentDidMount(){
-    console.log(this.props.location.search)
+    console.log(this.props)
+    console.log(queryString.stringify({q:"magician", sort:"-name"}))
     let params = queryString.parse(this.props.location.search)
     this.makeHttpRequestWithPage(params)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.makeSearchRequest()
+    }
   }
 
   makeHttpRequestWithPage = async (params) => {
@@ -48,9 +56,6 @@ class Monsters extends Component {
     }
     if(typeof params.type === "undefined"){
       params["type"] = this.state.type
-    }
-    if(typeof params["searchQuery"] === "undefined"){
-      params["searchQuery"] = this.state.searchQuery
     }
     const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${params.page}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}&race=${params.type}`, {
       method: 'GET',
@@ -72,12 +77,12 @@ class Monsters extends Component {
     });
   }
 
-  makeSearchRequest = async params => {
-    if(typeof params.searchQuery === "undefined" || params.searchQuery === ""){
-      this.makeHttpRequestWithPage(params)
+  makeSearchRequest = async => {
+    if(this.state.searchQuery === ""){
+      this.makeHttpRequestWithPage({})
     }
     else{
-      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${params.searchQuery}`)
+      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${this.state.searchQuery}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -99,13 +104,13 @@ class Monsters extends Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value, isLoading: true, current_page: 1})
-    if(event.target.name === "searchQuery"){
-      this.makeSearchRequest({[event.target.name]: event.target.value})
-    }
-    else{
+    // this.props.history.push({
+    //   pathname: '/monsters',
+    //   search: "?" + queryString.stringify({})
+    // })
+    if(event.target.name !== "searchQuery") {
       this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
     }
-    //this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
   }
 
   handlePaginationClick(page) {
