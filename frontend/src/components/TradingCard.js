@@ -9,7 +9,7 @@ class TradingCard extends Component {
       <div>
         <Link to={`${this.props.url}/${this.props.monster.id}`} style={{textDecoration:"none"}}>
           <Card style={{margin:"2rem"}}>
-            <Card.Img variant="top" src={this.props.monster.card_images[0].image_url} />
+            {/* <Card.Img variant="top" src={this.props.monster.card_images[0].image_url} /> */}
             <Card.Body>
               <Card.Title>{this.props.monster.name}</Card.Title>
             </Card.Body>

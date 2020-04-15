@@ -15,14 +15,13 @@ class Monsters extends Component {
       monsters: MonstersData.data,
       total: MonstersData.total,
       per_page: MonstersData.per_page,
-      current_page: MonstersData.page,
+      currentPage: MonstersData.page,
       last_page: MonstersData.total_pages,
       sortBy: "name",
       attribute: "",
       monsterType: "",
       type: "",
-      searchQuery: "",
-      params: {}
+      searchQuery: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
@@ -37,13 +36,20 @@ class Monsters extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
+      this.props.history.push({
+        pathname: '/monsters',
+        search: "?" + queryString.stringify({searchQuery:this.state.searchQuery})
+      })
       this.makeSearchRequest()
+    }
+    if(prevState.currentPage !== this.state.currentPage){
+      this.makeHttpRequestWithPage({})
     }
   }
 
   makeHttpRequestWithPage = async (params) => {
     if(typeof params["page"] === "undefined"){
-      params["page"] = this.state.current_page
+      params["page"] = this.state.currentPage
     }
     if(typeof params.attribute === "undefined"){
       params["attribute"] = this.state.attribute
@@ -72,8 +78,9 @@ class Monsters extends Component {
       monsters: data.data,
       total: data.total,
       per_page: data.per_page,
-      current_page: data.page,
-      last_page: data.total_pages
+      currentPage: data.page,
+      last_page: data.total_pages,
+      attribute: params.attribute
     });
   }
 
@@ -90,7 +97,7 @@ class Monsters extends Component {
           monsters: data,
           total: data.length,
           per_page: data.length,
-          current_page: 1,
+          currentPage: 1,
           last_page: 1
         })
       })
@@ -103,19 +110,14 @@ class Monsters extends Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value, isLoading: true, current_page: 1})
-    // this.props.history.push({
-    //   pathname: '/monsters',
-    //   search: "?" + queryString.stringify({})
-    // })
+    this.setState({[event.target.name]: event.target.value, isLoading: true, currentPage: 1})
     if(event.target.name !== "searchQuery") {
       this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
     }
   }
 
   handlePaginationClick(page) {
-    this.setState({current_page: page, isLoading: true})
-    this.makeHttpRequestWithPage({page: page})
+    this.setState({currentPage: page, isLoading: true})
   }
 
   render(){
