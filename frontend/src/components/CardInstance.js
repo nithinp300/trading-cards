@@ -35,7 +35,7 @@ class TradingCard extends Component {
     }
     return(
       <div>
-        <img src={this.state.cardData.card_images[0].image_url} height="500px" width="350px" align="left" style={{margin:"2rem"}}></img>
+        <img src={this.state.cardData.card_images[0].image_url} alt="card img" height="500px" width="350px" align="left" style={{margin:"2rem"}}></img>
         <div style={{padding:"1.5rem"}}>
           <h1>{this.state.cardData.name}</h1>
           <h3>Level {this.state.cardData.level} {this.state.cardData.attribute} Monster</h3>

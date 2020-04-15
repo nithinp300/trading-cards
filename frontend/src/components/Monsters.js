@@ -3,8 +3,7 @@ import PaginationBar from './PaginationBar'
 import {Container, Row, Col, Spinner} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import MonstersData from './monsters_data'
-import FilterSort from './FilterSort'
-import {Link, useRouteMatch} from 'react-router-dom';
+import SortFilterSearch from './SortFilterSearch'
 import queryString from 'query-string'
 
 class Monsters extends Component {
@@ -17,11 +16,11 @@ class Monsters extends Component {
       per_page: MonstersData.per_page,
       currentPage: MonstersData.page,
       last_page: MonstersData.total_pages,
-      sortBy: "name",
+      sort: "name",
       attribute: "",
-      monsterType: "",
+      class: "",
       type: "",
-      searchQuery: ""
+      query: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
@@ -31,39 +30,39 @@ class Monsters extends Component {
     console.log(this.props)
     console.log(queryString.stringify({q:"magician", sort:"-name"}))
     let params = queryString.parse(this.props.location.search)
-    this.makeHttpRequestWithPage(params)
+    this.makePaginationRequest(params)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    if (prevState.query !== this.state.query) {
       this.props.history.push({
         pathname: '/monsters',
-        search: "?" + queryString.stringify({searchQuery:this.state.searchQuery})
+        search: "?" + queryString.stringify({query:this.state.query})
       })
       this.makeSearchRequest()
     }
     if(prevState.currentPage !== this.state.currentPage){
-      this.makeHttpRequestWithPage({})
+      this.makePaginationRequest({})
     }
   }
 
-  makeHttpRequestWithPage = async (params) => {
+  makePaginationRequest = async (params) => {
     if(typeof params["page"] === "undefined"){
       params["page"] = this.state.currentPage
     }
     if(typeof params.attribute === "undefined"){
       params["attribute"] = this.state.attribute
     }
-    if(typeof params.sortBy === "undefined"){
-      params["sortBy"] = this.state.sortBy
+    if(typeof params.sort === "undefined"){
+      params["sort"] = this.state.sort
     }
-    if(typeof params.monsterType === "undefined"){
-      params["monsterType"] = this.state.monsterType
+    if(typeof params.class === "undefined"){
+      params["class"] = this.state.class
     }
     if(typeof params.type === "undefined"){
       params["type"] = this.state.type
     }
-    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${params.page}&sort=${params.sortBy}&attribute=${params.attribute}&type=${params.monsterType}&race=${params.type}`, {
+    const response = await fetch(`https://yugioh-data-service.herokuapp.com/monsters?page=${params.page}&sort=${params.sort}&attribute=${params.attribute}&type=${params.class}&race=${params.type}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -85,11 +84,11 @@ class Monsters extends Component {
   }
 
   makeSearchRequest = async => {
-    if(this.state.searchQuery === ""){
-      this.makeHttpRequestWithPage({})
+    if(this.state.query === ""){
+      this.makePaginationRequest({})
     }
     else{
-      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${this.state.searchQuery}`)
+      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${this.state.query}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -106,13 +105,13 @@ class Monsters extends Component {
 
   handleClearClick(){
     document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
-    this.makeHttpRequestWithPage(1)
+    this.makePaginationRequest(1)
   }
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value, isLoading: true, currentPage: 1})
-    if(event.target.name !== "searchQuery") {
-      this.makeHttpRequestWithPage({[event.target.name]: event.target.value, page: 1})
+    if(event.target.name !== "query") {
+      this.makePaginationRequest({[event.target.name]: event.target.value, page: 1})
     }
   }
 
@@ -133,10 +132,10 @@ class Monsters extends Component {
     return(
       <div>
         <br></br>
-        <FilterSort
+        <SortFilterSearch
           handleChange={this.handleChange}
           {...this.state}>
-        </FilterSort>
+        </SortFilterSearch>
         <Container fluid="md">
           <Row>
             <p>&nbsp;</p>

@@ -1,14 +1,14 @@
 import React from 'react';
 
-function FilterSort(props) {
-  let monsterTypeData = ['Normal Monster', 'Normal Tuner Monster', 'Effect Monster', 
+function SortFilterSearch(props) {
+  let classData = ['Normal Monster', 'Normal Tuner Monster', 'Effect Monster', 
   'Tuner Monster', 'Flip Effect Monster', 'Spirit Monster', 'Union Effect Monster', 
   'Gemini Monster', 'Pendulum Effect Monster', 'Pendulum Normal Monster', 
   'Pendulum Tuner Effect Monster', 'Ritual Monster', 'Ritual Effect Monster', 
   'Toon Monster', 'Fusion Monster', 'Synchro Monster', 'Synchro Tuner Monster', 
   'Synchro Pendulum Effect Monster', 'XYZ Monster', 'XYZ Pendulum Effect Monster', 
   'Link Monster', 'Pendulum Flip Effect Monster', 'Pendulum Effect Fusion Monster'];
-  let MonsterOptions = monsterTypeData.map(typeName => {
+  let MonsterOptions = classData.map(typeName => {
     return(<option value={typeName}>{typeName}</option>)
   })
   let typeData = ['Aqua', 'Beast', 'Beast-Warrior', 'Cyberse', 
@@ -22,8 +22,8 @@ function FilterSort(props) {
   return(
     <div>
       <div style={{float:"left"}}>
-        <label>&nbsp; Monster Type:&nbsp;</label>
-        <select value={props.monsterType} onChange={props.handleChange} name="monsterType">
+        <label>&nbsp; Classification:&nbsp;</label>
+        <select value={props.class} onChange={props.handleChange} name="class">
           <option value="">Choose</option>
           {MonsterOptions}
         </select>
@@ -43,11 +43,11 @@ function FilterSort(props) {
           <option value="">Choose</option>
           {TypeOptions}
         </select>
-        <input name="searchQuery" type="text" placeholder="Search" onChange={props.handleChange} style={{marginLeft:"1.5rem"}}></input>
+        <input name="query" type="text" placeholder="Search" onChange={props.handleChange} style={{marginLeft:"1.5rem"}}></input>
       </div>
       <div style={{float:"right"}}>
         <label>Sort by &nbsp;</label>
-        <select value={props.sortBy} onChange={props.handleChange} name="sortBy">
+        <select value={props.sort} onChange={props.handleChange} name="sort">
           <option value="name">Name: A to Z</option>
           <option value="-name">Name: Z to A</option>
           <option value="atk">ATK: Low to High</option>
@@ -62,4 +62,4 @@ function FilterSort(props) {
   )
 }
 
-export default FilterSort
+export default SortFilterSearch

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
+import {Nav, Navbar} from 'react-bootstrap';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Monsters from './components/Monsters'
 import Error from './components/Error'
