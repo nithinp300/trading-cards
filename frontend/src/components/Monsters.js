@@ -15,7 +15,7 @@ class Monsters extends Component {
       total: MonstersData.total,
       per_page: MonstersData.per_page,
       currentPage: MonstersData.page,
-      last_page: MonstersData.total_pages,
+      lastPage: MonstersData.total_pages,
       sort: "name",
       attribute: "",
       class: "",
@@ -30,7 +30,13 @@ class Monsters extends Component {
     console.log(this.props)
     console.log(queryString.stringify({q:"magician", sort:"-name"}))
     let params = queryString.parse(this.props.location.search)
-    this.makePaginationRequest(params)
+    console.log(params)
+    if(typeof params.query !== "undefined"){
+      this.makeSearchRequest(params)
+    }
+    else{
+      this.makePaginationRequest(params)
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -39,7 +45,7 @@ class Monsters extends Component {
         pathname: '/monsters',
         search: "?" + queryString.stringify({query:this.state.query})
       })
-      this.makeSearchRequest()
+      this.makeSearchRequest({})
     }
     if(prevState.currentPage !== this.state.currentPage){
       this.makePaginationRequest({})
@@ -78,17 +84,23 @@ class Monsters extends Component {
       total: data.total,
       per_page: data.per_page,
       currentPage: data.page,
-      last_page: data.total_pages,
-      attribute: params.attribute
+      lastPage: data.total_pages,
+      attribute: params.attribute,
+      class: params.class,
+      type: params.type,
+      sort: params.sort
     });
   }
 
-  makeSearchRequest = async => {
-    if(this.state.query === ""){
+  makeSearchRequest = async params => {
+    if(typeof params.query === "undefined"){
+      params.query = this.state.query
+    }
+    if(params.query === ""){
       this.makePaginationRequest({})
     }
     else{
-      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${this.state.query}`)
+      fetch(`https://yugioh-data-service.herokuapp.com/monsters?q=${params.query}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -97,7 +109,8 @@ class Monsters extends Component {
           total: data.length,
           per_page: data.length,
           currentPage: 1,
-          last_page: 1
+          lastPage: 1,
+          query: params.query
         })
       })
     }

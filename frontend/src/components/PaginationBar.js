@@ -10,10 +10,10 @@ export default function PaginationBar(props){
         <Pagination.Prev disabled={props.currentPage === 1}
         onClick={() => props.handlePaginationClick(props.currentPage-1)}/>
         <Pagination.Item>{props.currentPage}</Pagination.Item>
-        <Pagination.Next disabled={props.currentPage === props.last_page} 
+        <Pagination.Next disabled={props.currentPage === props.lastPage} 
         onClick={() => props.handlePaginationClick(props.currentPage+1)}/>
-        <Pagination.Last disabled={props.currentPage === props.last_page} 
-        onClick={() => props.handlePaginationClick(props.last_page)}/>
+        <Pagination.Last disabled={props.currentPage === props.lastPage} 
+        onClick={() => props.handlePaginationClick(props.lastPage)}/>
       </Pagination>
     </div>
   );

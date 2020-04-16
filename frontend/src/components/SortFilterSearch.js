@@ -43,7 +43,7 @@ function SortFilterSearch(props) {
           <option value="">Choose</option>
           {TypeOptions}
         </select>
-        <input name="query" type="text" placeholder="Search" onChange={props.handleChange} style={{marginLeft:"1.5rem"}}></input>
+        <input name="query" type="text" value={props.query} placeholder="Search" onChange={props.handleChange} style={{marginLeft:"1.5rem"}}></input>
       </div>
       <div style={{float:"right"}}>
         <label>Sort by &nbsp;</label>
