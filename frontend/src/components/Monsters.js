@@ -41,10 +41,10 @@ class Monsters extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
-      this.props.history.push({
-        pathname: '/monsters',
-        search: "?" + queryString.stringify({query:this.state.query})
-      })
+      // this.props.history.push({
+      //   pathname: '/monsters',
+      //   search: "?" + queryString.stringify({query: this.state.query})
+      // })
       this.makeSearchRequest({})
     }
     if(prevState.currentPage !== this.state.currentPage){
