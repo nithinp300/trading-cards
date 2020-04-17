@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PaginationBar from './PaginationBar'
 import {Container, Row, Col, Spinner} from 'react-bootstrap'
 import TradingCard from './TradingCard'
-import MonstersData from './monsters_data'
 import SortFilterSearch from './SortFilterSearch'
 import queryString from 'query-string'
 
@@ -11,11 +10,11 @@ class Monsters extends Component {
     super();
     this.state = {
       isLoading: true,
-      monsters: MonstersData.data,
-      total: MonstersData.total,
-      per_page: MonstersData.per_page,
-      currentPage: MonstersData.page,
-      lastPage: MonstersData.total_pages,
+      monsters: [],
+      total: 0,
+      per_page: 6,
+      currentPage: 1,
+      lastPage: 1,
       sort: "name",
       attribute: "",
       class: "",
