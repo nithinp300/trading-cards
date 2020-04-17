@@ -4,3 +4,6 @@ A collection of loosely coupled services(Microservices) for Yu-Gi-Oh! Trading Ca
 This Application consists of:
 
 Data Servcie: A RESTful API linked to a extensive MongoDB Atlas cloud database detailing all Yu-Gi-Oh! trading cards.
+
+Demo:
+![](yugioh-deck-demo.gif)
