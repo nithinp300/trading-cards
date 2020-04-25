@@ -3,6 +3,7 @@ import {Nav, Navbar} from 'react-bootstrap';
 import { useAuth0 } from "../react-auth0-spa";
 
 const NavBar = () => {
+  console.log(useAuth0().isAuthenticated);
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
@@ -14,10 +15,11 @@ const NavBar = () => {
           <Nav.Link href="/monsters">Monsters</Nav.Link>
           <Nav.Link href="/spells">Spells</Nav.Link>
           <Nav.Link href="/traps">Traps</Nav.Link>
-          {!isAuthenticated && (
-          <Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>
-          )}
+          {!isAuthenticated && 
+          (<Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>)
+          }
           {isAuthenticated && <Nav.Link onClick={() => logout()}>Log out</Nav.Link>}
+          {isAuthenticated && <Nav.Link href="/profile">Profile</Nav.Link>}
         </Nav>
       </Navbar>
     </div>

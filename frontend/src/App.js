@@ -1,10 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Router, Switch, Route} from 'react-router-dom';
 import Monsters from './components/Monsters'
 import Error from './components/Error'
 import CardInstance from './components/CardInstance'
 import NavBar from "./components/NavBar";
+import Profile from "./components/Profile";
+import history from "./utils/history";
 import { useAuth0 } from "./react-auth0-spa";
 
 export default function App(){
@@ -17,16 +19,17 @@ export default function App(){
   return(
     <div>
       <NavBar />
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           <Route path="/" exact component={Home}/>
-          <Route path="/Traps" component={Traps}/>
-          <Route path="/Spells" component={Spells}/>
-          <Route path="/Monsters" exact component={Monsters}/>
-          <Route path="/Monsters/:id" component={CardInstance}/>
+          <Route path="/traps" component={Traps}/>
+          <Route path="/spells" component={Spells}/>
+          <Route path="/monsters" exact component={Monsters}/>
+          <Route path="/monsters/:id" component={CardInstance}/>
+          <Route path="/profile" component={Profile} />
           <Route component={Error}/>
         </Switch>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
