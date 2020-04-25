@@ -1,3 +1,6 @@
 /node_modules
 npm-debug.log
 /*.env
+createTable.js
+deleteTable.js
+loadData.js
