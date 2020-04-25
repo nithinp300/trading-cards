@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import history from "./utils/history";
 import { useAuth0 } from "./react-auth0-spa";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App(){
   const { loading } = useAuth0();
@@ -26,7 +27,7 @@ export default function App(){
           <Route path="/spells" component={Spells}/>
           <Route path="/monsters" exact component={Monsters}/>
           <Route path="/monsters/:id" component={CardInstance}/>
-          <Route path="/profile" component={Profile} />
+          <PrivateRoute path="/profile" component={Profile} />
           <Route component={Error}/>
         </Switch>
       </Router>
