@@ -1,23 +1,22 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Nav, Navbar} from 'react-bootstrap';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Monsters from './components/Monsters'
 import Error from './components/Error'
 import CardInstance from './components/CardInstance'
+import NavBar from "./components/NavBar";
+import { useAuth0 } from "./react-auth0-spa";
 
 export default function App(){
+  const { loading } = useAuth0();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return(
     <div>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/">Yu-Gi-Oh! Deck</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/monsters">Monsters</Nav.Link>
-          <Nav.Link href="/spells">Spells</Nav.Link>
-          <Nav.Link href="/traps">Traps</Nav.Link>
-        </Nav>
-      </Navbar>
+      <NavBar />
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={Home}/>
