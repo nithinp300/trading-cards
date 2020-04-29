@@ -3,7 +3,6 @@ import {Nav, Navbar} from 'react-bootstrap';
 import { useAuth0 } from "../react-auth0-spa";
 
 const NavBar = () => {
-  console.log(useAuth0().isAuthenticated);
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   return (
