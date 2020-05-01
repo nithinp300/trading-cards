@@ -1,7 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Router, Switch, Route} from 'react-router-dom';
-import Monsters from './components/Monsters'
+import Monsters from './components/Monsters';
+import Spells from './components/Spells'
 import Error from './components/Error'
 import CardInstance from './components/CardInstance'
 import NavBar from "./components/NavBar";
@@ -37,10 +38,6 @@ export default function App(){
 
 function Home() {
     return <h2>Home</h2>;
-  }
-
-function Spells() {
-  return <h2>Spells</h2>;
 }
 
 function Traps() {
