@@ -1,28 +1,42 @@
 import React, { Fragment, useState, useEffect} from "react";
 import { useAuth0 } from "../react-auth0-spa";
 import axios from 'axios';
+import TradingCard from './TradingCard'
 
 function Profile(){
   const { loading, user } = useAuth0();
   const [count, setCount] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [cardName, setCardName] = useState("");
+  const [cardData, setCardData] = useState(null);
 
   useEffect(() => {
-    if(selectedFile != null){
-      const form = new FormData();
-      form.append('image', selectedFile);
-      axios.post('https://yugioh-deck.cognitiveservices.azure.com/vision/v2.0/ocr?language=unk&detectOrientation=true', form, { headers: {'Ocp-Apim-Subscription-Key':process.env.REACT_APP_COGNITIVE_SERVICES_API_KEY,'Content-Type': 'multipart/form-data'} })
-      .then(res => {
-        // handle success
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.regions[0].lines[0].words);
-      })
-      .catch(function (response) {
-        //handle error
-        console.log(response);
-      });
-    }
+    // if(selectedFile != null){
+    //   const form = new FormData();
+    //   form.append('image', selectedFile);
+    //   axios.post(
+    //     'https://yugioh-deck.cognitiveservices.azure.com/vision/v2.0/ocr?language=unk&detectOrientation=true', 
+    //     form, 
+    //     { headers: {'Ocp-Apim-Subscription-Key':process.env.REACT_APP_COGNITIVE_SERVICES_API_KEY,'Content-Type': 'multipart/form-data'} })
+    //   .then(res => {
+    //     // handle success
+    //     console.log(res);
+    //     console.log(res.data);
+    //     console.log(res.data.regions[0].lines[0].words);
+    //     let words = res.data.regions[0].lines[0].words;
+    //     let nameArr = [];
+    //     for(let i = 0; i < words.length; i++){
+    //       nameArr.push(words[i].text);
+    //     }
+    //     let name = nameArr.join(" ");
+    //     console.log(name);
+    //     setCardName(name);
+    //   })
+    //   .catch(function (response) {
+    //     //handle error
+    //     console.log(response);
+    //   });
+    // }
   });
 
   if (loading || !user) {
@@ -35,10 +49,12 @@ function Profile(){
   };
 
   const fileData = () => {
-    if (selectedFile) {
+    if (cardData) {
       return (
         <div> 
+          <img src={cardData.card_images[0].image_url}></img>
           <h2>File Details:</h2> 
+          <p>Card Name: {cardName}</p>
           <p>File Name: {selectedFile.name}</p> 
           <p>File Type: {selectedFile.type}</p> 
           <p> 
@@ -57,39 +73,49 @@ function Profile(){
     } 
   };
 
-  const onFileUpload = () => { 
-     
-    // Create an object of formData 
-    const formData = new FormData(); 
-   
-    // Update the formData object 
-    formData.append( 
-      "myFile", 
-      this.state.selectedFile, 
-      this.state.selectedFile.name 
-    ); 
-   
-    // Details of the uploaded file 
-    console.log(this.state.selectedFile); 
-   
-    // Request made to the backend api 
-    // Send formData object 
-    axios.post("api/uploadfile", formData); 
-  }; 
+  const onFileUpload = () => {
+    const form = new FormData();
+    form.append('image', selectedFile);
+    axios.post(
+      'https://yugioh-deck.cognitiveservices.azure.com/vision/v2.0/ocr?language=unk&detectOrientation=true', 
+      form, 
+      { headers: {'Ocp-Apim-Subscription-Key':process.env.REACT_APP_COGNITIVE_SERVICES_API_KEY,'Content-Type': 'multipart/form-data'} })
+    .then(res => {
+      // handle success
+      console.log(res);
+      console.log(res.data);
+      console.log(res.data.regions[0].lines[0].words);
+      let words = res.data.regions[0].lines[0].words;
+      let nameArr = [];
+      for(let i = 0; i < words.length; i++){
+        nameArr.push(words[i].text);
+      }
+      let name = nameArr.join(" ");
+      console.log(name);
+      setCardName(name);
+      axios.get(`https://yugioh-data-service.herokuapp.com/monsters?q=${name}`)
+        .then(function (response) {
+          // handle success
+          console.log(response.data[0]);
+          setCardData(response.data[0]);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    })
+    .catch(function (response) {
+      //handle error
+      console.log(response);
+    });
+  };
 
   return (
     <Fragment>
-      <img src={user.picture} alt="Profile" />
-      <h2>{user.name}</h2>
-      <p>{user.email}</p>
       <code>{JSON.stringify(user, null, 2)}</code>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
       <div>
         <input type="file" onChange={onFileChange}></input>
-        <button>
+        <button onClick={onFileUpload}>
           Upload
         </button>
       </div>
