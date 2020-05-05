@@ -17,8 +17,8 @@ const NavBar = () => {
           {!isAuthenticated && 
           (<Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>)
           }
-          {isAuthenticated && <Nav.Link onClick={() => logout()}>Log out</Nav.Link>}
           {isAuthenticated && <Nav.Link href="/profile">Profile</Nav.Link>}
+          {isAuthenticated && <Nav.Link onClick={() => logout()}>Log out</Nav.Link>}
         </Nav>
       </Navbar>
     </div>
