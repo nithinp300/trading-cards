@@ -1,0 +1,26 @@
+{
+  "name": "yugioh-deck-user-service",
+  "version": "1.0.0",
+  "description": "A CRUD app for storing user trading cards",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nithinp300/trading-cards.git"
+  },
+  "author": "Nithin Pingili",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nithinp300/trading-cards/issues"
+  },
+  "homepage": "https://github.com/nithinp300/trading-cards#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "jwks-rsa": "^1.8.0",
+    "npm-run-all": "^4.1.5"
+  }
+}
