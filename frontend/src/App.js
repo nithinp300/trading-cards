@@ -10,6 +10,7 @@ import Profile from "./components/Profile";
 import history from "./utils/history";
 import { useAuth0 } from "./react-auth0-spa";
 import PrivateRoute from "./components/PrivateRoute";
+import ExternalApi from "./components/ExternalApi";
 
 export default function App(){
   const { loading } = useAuth0();
@@ -29,6 +30,7 @@ export default function App(){
           <Route path="/monsters" exact component={Monsters}/>
           <Route path="/monsters/:id" component={CardInstance}/>
           <PrivateRoute path="/profile" component={Profile} />
+          <PrivateRoute path="/external-api" component={ExternalApi} />
           <Route component={Error}/>
         </Switch>
       </Router>
