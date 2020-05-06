@@ -11,32 +11,6 @@ function Profile(){
   const [cardData, setCardData] = useState(null);
 
   useEffect(() => {
-    // if(selectedFile != null){
-    //   const form = new FormData();
-    //   form.append('image', selectedFile);
-    //   axios.post(
-    //     'https://yugioh-deck.cognitiveservices.azure.com/vision/v2.0/ocr?language=unk&detectOrientation=true', 
-    //     form, 
-    //     { headers: {'Ocp-Apim-Subscription-Key':process.env.REACT_APP_COGNITIVE_SERVICES_API_KEY,'Content-Type': 'multipart/form-data'} })
-    //   .then(res => {
-    //     // handle success
-    //     console.log(res);
-    //     console.log(res.data);
-    //     console.log(res.data.regions[0].lines[0].words);
-    //     let words = res.data.regions[0].lines[0].words;
-    //     let nameArr = [];
-    //     for(let i = 0; i < words.length; i++){
-    //       nameArr.push(words[i].text);
-    //     }
-    //     let name = nameArr.join(" ");
-    //     console.log(name);
-    //     setCardName(name);
-    //   })
-    //   .catch(function (response) {
-    //     //handle error
-    //     console.log(response);
-    //   });
-    // }
   });
 
   if (loading || !user) {
