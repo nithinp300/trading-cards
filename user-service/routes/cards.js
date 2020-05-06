@@ -50,4 +50,24 @@ cards.get("/:cardId", (req, res) => {
   });
 });
 
+cards.delete('/:cardId', function (req, res) {
+  let id = parseInt(req.params.cardId)
+  console.log(typeof id)
+  var params = {
+    TableName: table,
+    Key:{
+      "id": id
+    }
+  };
+  console.log("Deleting an item...");
+  docClient.delete(params, function(err, data) {
+      if (err) {
+          console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+      } else {
+          console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
+          res.send('DELETE request success');
+      }
+  });
+})
+
 module.exports = cards;
