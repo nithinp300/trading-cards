@@ -20,7 +20,7 @@ app.use(urlencodedParser)
 app.use('/', root);
 
 // Connect cards routes to application
-app.use('/cards', cardsRouter);
+app.use('/api/cards', cardsRouter);
 
 const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Listening on port ${port}`));
