@@ -13,7 +13,6 @@ let docClient = new AWS.DynamoDB.DocumentClient();
 let table = "Cards";
 
 cards.post("/", function (req, res) {
-  console.log(req.body)
   let params = {
     TableName: table,
     Item: req.body
@@ -22,11 +21,9 @@ cards.post("/", function (req, res) {
   docClient.put(params, function(err, data) {
       if (err) {
         console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-        res.status(400).send('Bad Request');
-      } else {
-        console.log("Added item:", JSON.stringify(data, null, 2));
-        res.send('OK');
+        res.status(400).json({ error: 'Could not create Card' });
       }
+      res.json(data)
   });
 });
 
@@ -36,19 +33,15 @@ cards.get("/", (req, res) => {
   };
   docClient.scan(params, function(err, data) {
     if (err) {
-      console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
-      res.status(404).send('Not Found');
+      res.status(400).json({ error: "Error retrieving Cards" });
     } else {
-      console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
-      res.json(data);
+      res.json(data.Items);
     }
   });
 });
 
 cards.get("/:cardId", (req, res) => {
-  console.log(typeof req.params.cardId)
   let id = parseInt(req.params.cardId)
-  console.log(typeof id)
   let params = {
     TableName: table,
     Key:{
@@ -57,21 +50,19 @@ cards.get("/:cardId", (req, res) => {
   };
   docClient.get(params, function(err, data) {
     if (err) {
-      console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
-      res.status(404).send('Not Found');
-    } else {
-      if(Object.keys(data).length === 0) {
-        res.status(404).send('Not Found');
-      }
-      console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+      res.status(400).json({ error: "Error retrieving Card" });
+    }
+    if(data.Item) {
       res.json(data);
+    }
+    else {
+      res.status(404).json({ error: `Card with id: ${id} not found` });
     }
   });
 });
 
 cards.delete('/:cardId', function (req, res) {
   let id = parseInt(req.params.cardId)
-  console.log(typeof id)
   let params = {
     TableName: table,
     Key: {
@@ -80,14 +71,12 @@ cards.delete('/:cardId', function (req, res) {
     ConditionExpression: "attribute_exists(id)"
   };
   console.log("Deleting an item...");
-  docClient.delete(params, function(err, data) {
-      if (err) {
-        console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
-        res.status(404).send('Not Found');
-      } else {
-        console.log("DeleteItem succeeded:", JSON.stringify(data, null, 2));
-        res.status(200).send('OK');
-      }
+  docClient.delete(params, function(err) {
+    if (err) {
+      console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+      res.status(404).json({ error: `Card with id: ${id} not found` });
+    }
+    res.json({ success: true });
   });
 });
 
