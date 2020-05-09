@@ -4,7 +4,7 @@ import {Router, Switch, Route} from 'react-router-dom';
 import Monsters from './components/Monsters';
 import Spells from './components/Spells'
 import Error from './components/Error'
-import CardInstance from './components/CardInstance'
+import TradingCardInstance from './components/TradingCardInstance'
 import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
 import history from "./utils/history";
@@ -28,7 +28,7 @@ export default function App(){
           <Route path="/traps" component={Traps}/>
           <Route path="/spells" component={Spells}/>
           <Route path="/monsters" exact component={Monsters}/>
-          <Route path="/monsters/:id" component={CardInstance}/>
+          <Route path="/monsters/:id" component={TradingCardInstance}/>
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/deck" component={Deck} />
           <Route component={Error}/>

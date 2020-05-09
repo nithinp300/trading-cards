@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link, useRouteMatch} from 'react-router-dom';
 
-class TradingCard extends Component {
+class TradingCardInstance extends Component {
   constructor(){
     super();
     this.state = {
@@ -51,4 +51,4 @@ class TradingCard extends Component {
   }
 }
 
-export default TradingCard
+export default TradingCardInstance
