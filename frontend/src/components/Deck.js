@@ -21,10 +21,10 @@ class Deck extends Component {
 
   render(){
     let url = "/monsters"
-    let monsterCards = this.state.cards.map(monster => {
+    let monsterCards = this.state.cards.map(card => {
       return(
         <Col md="4">
-          <TradingCard monster={monster} url={url}></TradingCard>
+          <TradingCard monster={card} url={url}></TradingCard>
         </Col>
       )
     })

@@ -1,11 +1,9 @@
 import React, { Fragment, useState, useEffect} from "react";
 import { useAuth0 } from "../react-auth0-spa";
 import axios from 'axios';
-import TradingCard from './TradingCard'
 
 function Profile(){
   const { loading, user } = useAuth0();
-  const [count, setCount] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [cardName, setCardName] = useState("");
   const [cardData, setCardData] = useState(null);
