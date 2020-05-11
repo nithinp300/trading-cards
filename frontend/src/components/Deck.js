@@ -8,12 +8,11 @@ class Deck extends Component {
     super();
     this.state = {
       cards: [],
-      selectedFile: null,
-      cardName: null,
-      cardData: null
+      selectedFile: null
     }
     this.onFileChange = this.onFileChange.bind(this);
     this.onFileUpload = this.onFileUpload.bind(this);
+    this.makeSearchRequest = this.makeSearchRequest.bind(this);
   }
   
   componentDidMount(){
@@ -46,27 +45,40 @@ class Deck extends Component {
       console.log(res.data.regions[0].lines[0].words);
       let words = res.data.regions[0].lines[0].words;
       let nameArr = [];
-      for(let i = 0; i < words.length; i++){
+      for(let i = 0; i < words.length; i++) {
         nameArr.push(words[i].text);
       }
       let name = nameArr.join(" ");
       console.log(name);
-      this.setState({cardName: name});
-      axios.get(`https://yugioh-data-service.herokuapp.com/monsters?q=${name}`)
-        .then(function (response) {
-          // handle success
-          console.log(response.data[0]);
-          this.setState({cardData: response.data[0]});
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
+      this.makeSearchRequest(name);
     })
     .catch(function (response) {
       //handle error
       console.log(response);
     });
+  }
+
+  makeSearchRequest(searchQuery) {
+    const currentComponent = this;
+    axios.get(`https://yugioh-data-service.herokuapp.com/monsters?q=${searchQuery}`)
+      .then(function (response) {
+        // handle success
+        console.log(response.data[0]);
+        currentComponent.makeAddRequest(response.data[0])
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+  }
+
+  makeAddRequest(cardData) {
+    axios.post(`http://localhost:5000/api/cards`, cardData)
+    .then(res => {
+      console.log(res);
+      console.log(res.status);
+      alert(`${cardData.name} was added to your Deck!`);
+    })
   }
 
   onFileChange(event) {
@@ -85,12 +97,10 @@ class Deck extends Component {
     })
 
     const fileData = () => {
-      if (this.state.cardData) {
+      if (this.state.selectedFile) {
         return (
           <div> 
-            <img src={this.state.cardData.card_images[0].image_url}></img>
             <h2>File Details:</h2> 
-            <p>Card Name: {this.state.cardName}</p>
             <p>File Name: {this.state.selectedFile.name}</p> 
             <p>File Type: {this.state.selectedFile.type}</p> 
             <p> 
@@ -115,13 +125,11 @@ class Deck extends Component {
             <p>&nbsp;</p>
           </Row>
           <Row>
-            <input type="file" onChange={this.onFileChange}></input>
-            <button onClick={this.onFileUpload}>
-              Upload
-            </button>
-          </Row>
-          <Row>
-          {fileData()}
+            <div style={{margin: "auto"}}>
+              <h4>Upload an image of a card to add to your Deck</h4>
+              <input type="file" onChange={this.onFileChange}></input>
+              <button onClick={this.onFileUpload}>Upload</button>
+            </div>
           </Row>
           <Row>
             {monsterCards}
