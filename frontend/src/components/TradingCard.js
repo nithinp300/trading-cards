@@ -1,10 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import {Button} from 'react-bootstrap'
 import {Link, useRouteMatch} from 'react-router-dom';
 import { useAuth0 } from "../react-auth0-spa";
 import axios from 'axios';
 
 function TradingCard(props) {
+  const [inDeck, setInDeck] = useState(false);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/cards`)
+    .then(res => {
+      let deckArr = res.data;
+      let i = 0;
+      for(i = 0; i < deckArr.length; i++){
+        if(props.monster.id === deckArr[i].id) {
+          setInDeck(true);
+        }
+      }
+    })
+  }, []);
   function handleAddClick(){
     let cardData = props.monster
     console.log(cardData)
@@ -13,7 +26,8 @@ function TradingCard(props) {
       .then(res => {
         console.log(res);
         console.log(res.status);
-        alert(`${cardData.name} was added to your Deck!`);
+        setInDeck(true)
+        //alert(`${cardData.name} was added to your Deck!`);
       })
   }
 
@@ -22,23 +36,26 @@ function TradingCard(props) {
       .then(res => {
         console.log(res);
         console.log(res.data);
-        alert(`${props.monster.name} was removed from your Deck`);
+        setInDeck(false)
+        //alert(`${props.monster.name} was removed from your Deck`);
       })
   }
+  function showButton(){
+    if(inDeck){
+      return(<button style={{width:"105%"}} onClick={handleRemoveClick}>Remove</button>)
+    }
+    else{
+      return(<button style={{width:"105%"}} onClick={handleAddClick}>Add</button>)
+    }
+  }
   const { isAuthenticated } = useAuth0();
-  // const [inDeck, setInDeck] = useState(null);
-
-  // useEffect(() => {
-
-  // });
   if (!props.monster.card_images) return null;
   return(
     <div style={{margin:"2rem"}}>
       <Link to={`${props.url}/${props.monster.id}`} style={{textDecoration:"none"}}>
         <img src={props.monster.card_images[0].image_url} alt={props.monster.name} height="400" width="300"></img>
       </Link>
-      <button onClick={handleAddClick}>Add</button>
-      <button onClick={handleRemoveClick}>Remove</button>
+      {showButton()}
     </div>
   )
 }
