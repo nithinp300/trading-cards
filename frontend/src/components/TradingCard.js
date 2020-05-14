@@ -4,7 +4,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import axios from 'axios';
 
 function TradingCard(props) {
-  const [inDeck, setInDeck] = useState(false);
+  const [inDeck, setInDeck] = useState(props.inDeck);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/api/cards`)
@@ -36,16 +36,16 @@ function TradingCard(props) {
       .then(res => {
         console.log(res);
         console.log(res.data);
-        setInDeck(false)
+        setInDeck(false);
         //alert(`${props.monster.name} was removed from your Deck`);
       })
   }
   function showButton(){
     if(inDeck){
-      return(<button style={{width:"105%"}} onClick={handleRemoveClick}>Remove</button>)
+      return(<button style={{width:"100%"}} onClick={handleRemoveClick}>Remove</button>)
     }
     else{
-      return(<button style={{width:"105%"}} onClick={handleAddClick}>Add</button>)
+      return(<button style={{width:"100%"}} onClick={handleAddClick}>Add</button>)
     }
   }
   const { isAuthenticated } = useAuth0();
@@ -53,7 +53,7 @@ function TradingCard(props) {
   return(
     <div style={{margin:"2rem"}}>
       <Link to={`${props.url}/${props.monster.id}`} style={{textDecoration:"none"}}>
-        <img src={props.monster.card_images[0].image_url} alt={props.monster.name} height="400" width="300"></img>
+        <img src={props.monster.card_images[0].image_url} alt={props.monster.name} height="400" width="286"></img>
       </Link>
       {showButton()}
     </div>

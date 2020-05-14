@@ -4,6 +4,7 @@ import {Container, Row, Col, Spinner} from 'react-bootstrap'
 import TradingCard from './TradingCard'
 import SortFilterSearch from './SortFilterSearch'
 import queryString from 'query-string'
+import axios from 'axios';
 
 class Monsters extends Component {
   constructor(){

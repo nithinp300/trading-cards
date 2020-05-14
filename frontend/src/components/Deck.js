@@ -91,7 +91,7 @@ class Deck extends Component {
     let monsterCards = this.state.cards.map(card => {
       return(
         <Col md="4">
-          <TradingCard monster={card} url={url}></TradingCard>
+          <TradingCard monster={card} url={url} inDeck={true}></TradingCard>
         </Col>
       )
     })
@@ -121,9 +121,9 @@ class Deck extends Component {
     return(
       <div>
         <Container fluid="md">
-          <Row>
+          {/* <Row>
             <p>&nbsp;</p>
-          </Row>
+          </Row> */}
           <Row>
             <div style={{margin: "auto"}}>
               <h4>Upload an image of a card to add to your Deck</h4>
