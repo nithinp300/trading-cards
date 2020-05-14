@@ -15,7 +15,7 @@ const NavBar = () => {
           <Nav.Link href="/spells">Spells</Nav.Link>
           <Nav.Link href="/traps">Traps</Nav.Link>
           {!isAuthenticated && 
-          (<Nav.Link onClick={() => loginWithRedirect({})}>Log in</Nav.Link>)
+          (<Nav.Link onClick={() => loginWithRedirect({redirect_uri: "http://localhost:3000/monsters"})}>Log in</Nav.Link>)
           }
           {isAuthenticated && <Nav.Link href="/profile">Profile</Nav.Link>}
           {isAuthenticated && <Nav.Link href="/deck">Deck</Nav.Link>}
