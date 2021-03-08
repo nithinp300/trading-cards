@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/trading-cards/static/css/main.ef9ab79f.chunk.css",
+    "main.js": "/trading-cards/static/js/main.91528b6b.chunk.js",
+    "main.js.map": "/trading-cards/static/js/main.91528b6b.chunk.js.map",
+    "runtime-main.js": "/trading-cards/static/js/runtime-main.06baa942.js",
+    "runtime-main.js.map": "/trading-cards/static/js/runtime-main.06baa942.js.map",
+    "static/css/2.de424728.chunk.css": "/trading-cards/static/css/2.de424728.chunk.css",
+    "static/js/2.70060d08.chunk.js": "/trading-cards/static/js/2.70060d08.chunk.js",
+    "static/js/2.70060d08.chunk.js.map": "/trading-cards/static/js/2.70060d08.chunk.js.map",
+    "index.html": "/trading-cards/index.html",
+    "precache-manifest.54687bafb746b7010eaffb8c7fd1ddee.js": "/trading-cards/precache-manifest.54687bafb746b7010eaffb8c7fd1ddee.js",
+    "service-worker.js": "/trading-cards/service-worker.js",
+    "static/css/2.de424728.chunk.css.map": "/trading-cards/static/css/2.de424728.chunk.css.map",
+    "static/css/main.ef9ab79f.chunk.css.map": "/trading-cards/static/css/main.ef9ab79f.chunk.css.map",
+    "static/js/2.70060d08.chunk.js.LICENSE.txt": "/trading-cards/static/js/2.70060d08.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.06baa942.js",
+    "static/css/2.de424728.chunk.css",
+    "static/js/2.70060d08.chunk.js",
+    "static/css/main.ef9ab79f.chunk.css",
+    "static/js/main.91528b6b.chunk.js"
+  ]
+}
